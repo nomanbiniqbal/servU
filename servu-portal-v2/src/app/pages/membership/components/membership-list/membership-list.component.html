@@ -1,0 +1,24 @@
+<div class="container">
+    <div *ngIf="memberShips.length">
+        <div class="search-field">
+            <input type="text" class="form-control" [(ngModel)]="s" (keyup)="search(s)" placeholder="Search">
+        </div>
+    </div>
+
+    <div class="with-scroll">
+        <ul class="list-group">
+            <div *ngFor="let c of memberShips" class="my-list-item"
+                 (click)="onSelect(c)"
+                 [ngClass]="{active:c.id==selectedId}">
+                <i class="fa fa-angle-right fa-fw" aria-hidden="true"></i>{{c.membership_name}}
+            </div>
+        </ul>
+
+
+        <div *ngIf="!memberShips.length" class="text-center col-sm-12 margin-15">
+        <span *ngIf="!loading">This memberShips is empty and to create new costomer please click on <i
+                class="fa fa-plus-circle-o"></i></span>
+            <span *ngIf="loading"><i class="fa fa-spin fa-spinner"></i></span>
+        </div>
+    </div>
+</div>

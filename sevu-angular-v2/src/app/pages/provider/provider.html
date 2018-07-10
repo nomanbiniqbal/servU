@@ -1,0 +1,36 @@
+<div class="row">
+    <ba-card class="col-sm-3 no-body-padding"
+             title="List"
+             cardType="card-action"
+             baCardClass="medium-card"
+             (onAction)="popup.create()"
+             baCardActionClass="fa fa-plus-circle">
+        <provider-list (onSelect)="select($event)"></provider-list>
+    </ba-card>
+
+
+    <div class="col-sm-9">
+
+        <div class="row">
+            <provider-detail class="col-sm-12" [provider]="pro"></provider-detail>
+        </div>
+
+
+        <div class="row" *ngIf="pro.id">
+
+            <basic-schedule class="col-sm-4 with-scroll" [providerId]="pro.id"></basic-schedule>
+            <advance-schedule class="col-sm-4 with-scroll" [providerId]="pro.id"></advance-schedule>
+
+            <ba-card class="col-sm-4"
+                     (onAction)="onSync()"
+                     cardType="card-action"
+                     div baCardActionClass="fa fa-refresh"
+                     baCardClass="medium-card card-margin with-scroll" title="Google Integration">
+                <!--<google-calender-list></google-calender-list>-->
+            </ba-card>
+
+        </div>
+  </div>
+</div>
+
+<provider-popup #popup></provider-popup>

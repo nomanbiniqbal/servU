@@ -1,0 +1,113 @@
+<ba-card title="Inclusions" baCardClass="medium-card with-scroll no-body-padding"
+         (onAction)="new()"
+         cardType="card-action" baCardActionClass="fa fa-plus-circle">
+    <ul class="list-group">
+        <li *ngFor="let item of list" (click)="edit(item)" class="list-group-item">
+            <div class="row">
+                <div class="col-4">
+                    Type: {{item.counter_type|baPriceType}}
+                </div>
+                <div class="col-8">
+                    {{item.business_product.product_type}}:{{item.business_product.name}}
+                </div>
+            </div>
+
+        </li>
+    </ul>
+
+</ba-card>
+
+
+<div bsModal #create="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+     aria-labelledby="myLargeModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form #f="ngForm" (ngSubmit)="submit(f.value)" autocomplete="off">
+                <input type="hidden" name="id" ngModel #id="ngModel">
+
+                <div class="modal-header">
+                    <h4 class="modal-title" *ngIf="id.value">Edit</h4>
+                    <h4 class="modal-title" *ngIf="!id.value">Add</h4>
+                    <button class="close" type="button" (click)="create.hide()" aria-label="Close">
+                      <i class="ion-close" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="form-group row" *ngIf="!id.value">
+                            <div class="col-4">
+                                <label class="form-control-label">
+                                    product_id
+                                </label>
+                            </div>
+                            <div class="col-8">
+                                <div class="row">
+
+                                    <div class="col-4">
+                                        <select class="form-control" ngModel
+                                                #type="ngModel"
+                                                name="type">
+                                            <option value="undefined">Select</option>
+                                            <option value="service">Service</option>
+                                            <option value="class">Class</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-8">
+                                        <ba-select2 [options]="type.value=='service'?service:classes"
+                                                    fieldName="name"
+                                                    name="product_id"
+                                                    ngModel
+                                                    modalFieldName="id"
+                                                    placeholder="Please Select Product"></ba-select2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row" *ngIf="!id.value">
+                            <div class="col-4">
+                                <label class="form-control-label">
+                                    counter_type
+                                </label>
+                            </div>
+                            <div class="col-8">
+                                <select class="form-control" name="counter_type" ngModel>
+                                    <option value="undefined">Select</option>
+                                    <option value="1">Week</option>
+                                    <option value="2">Month</option>
+                                    <option value="3">Year</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-4">
+                                <label class="form-control-label">
+                                    counter
+                                </label>
+                            </div>
+                            <div class="col-8">
+                                <input type="text" class="form-control" name="counter" ngModel>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-4">
+                                <label class="form-control-label">
+                                    is_active
+                                </label>
+                            </div>
+                            <div class="col-8">
+                                <ui-switch name="is_active" ngModel></ui-switch>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-danger" *ngIf="id.value" type="button" (click)="delet(id.value)">Delete
+                    </button>
+
+                    <button class="btn btn-primary auth-input">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

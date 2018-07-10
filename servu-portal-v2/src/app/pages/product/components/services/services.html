@@ -1,0 +1,177 @@
+<div class="row">
+    <ba-card class="col-sm-3 list-card-padding" title="Services" baCardClass="service-list-card-height with-scroll" (onAction)="createService()"
+             cardType="card-action"
+             baCardActionClass="fa fa-plus-circle">
+        <app-product-list type="Service" (select)="productSelect($event)"></app-product-list>
+    </ba-card>
+<div class="col-sm-6 card-padding-right-left">
+    <ba-card cardType="card-action" baCardClass="xxsmall-card">
+             <!--[title]="product.name" -->
+             <!--[baCardActionClass]="product.id?'fa fa-edit':''"-->
+             <!--(onAction)="editProduct(product)">-->
+
+
+      <div *ngIf="!product.id">
+        <div class="col-sm-12 text-center">
+          <h3 *ngIf="!loading">Please Select Any Service</h3>
+          <span *ngIf="loading"> <i class="fa fa-spinner fa-spin"></i> </span>
+        </div>
+      </div>
+
+      <div class="container" *ngIf="product.id">
+
+        <div class="row">
+          <div class="col-sm-2 text-center card-title">Name</div>
+          <div class="col-sm-2 text-center card-title">Price</div>
+          <div class="col-sm-2 text-center card-title">Duration</div>
+          <div class="col-sm-1 text-center card-title">Tax</div>
+          <div class="col-sm-2 text-center card-title">Commision</div>
+          <div class="col-sm-2 text-center card-title">Category</div>
+          <div class="col-sm-1 text-center card-title">Edit</div>
+        </div>
+        <div class="row">
+          <div class="col-sm-2 text-center small">{{product.name}}</div>
+          <div class="col-sm-2 text-center small">{{product.cost}}$</div>
+          <div class="col-sm-2 text-center small">{{product.duration}}</div>
+          <div class="col-sm-1 text-center small">{{product.tax}}</div>
+          <div class="col-sm-2 text-center small">{{product.commission}}%</div>
+          <div class="col-sm-2 text-center small">{{product.category||'Other'}}</div>
+          <div class="col-sm-1 text-center"><i class="fa fa-edit" (click)="editProduct(product)"></i></div>
+
+        </div>
+      </div>
+
+        <!--<services-detail [product]="product"></services-detail>-->
+    </ba-card>
+    <app-notification class="card-padding-right-left" [product]="product"></app-notification>
+</div>
+
+    <service-provider-list class="col-3 bottom-list-card-padding" [servicId]="product.id"></service-provider-list>
+
+</div>
+
+
+
+<div bsModal #serviceEdit="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+     aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form #sf="ngForm" (ngSubmit)="createProduct(sf.value)" autocomplete="off">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" *ngIf="!pId.value">Add Service</h4>
+                    <h4 class="modal-title" *ngIf="pId.value">Edit Service</h4>
+                    <button class="close pull-right" aria-label="Close" type="button" (click)="serviceEdit.hide()">
+                        <!--<span aria-hidden="true">x</span>-->
+                      <i class="ion-close" aria-hidden="true"></i>
+                    </button>
+
+                </div>
+
+                <div class="modal-body">
+
+                    <tabset type="pills" [justified]="true">
+                        <tab heading='Services'>
+                            <div>
+                                <input type="hidden" name="product_type" ngModel="Service">
+                                <input type="hidden" name="product_id" [ngModel]="editP.id" #pId="ngModel">
+
+                                <div class="form-group row" baFieldFocusValidation [input]="service_name">
+                                    <label class="col-sm-3 control-label">Name</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control " name="name" #service_name="ngModel"
+                                               required
+                                               [ngModel]="editP.name">
+                                        <ba-validation-message [input]="service_name"></ba-validation-message>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 control-label">Duration</label>
+                                    <div class="col-sm-9">
+                                      <select name="duration"  class="form-control" [ngModel]="editP.duration">
+                                        <option>15</option>
+                                        <option>30</option>
+                                        <option>45</option>
+                                        <option>60</option>
+                                        <option>75</option>
+                                        <option>90</option>
+                                        <option>105</option>
+                                        <option>120</option>
+                                        <option>135</option>
+                                        <option>150</option>
+                                        <option>165</option>
+                                        <option>180</option>
+                                      </select>
+                                        <!--<input type="text"-->
+                                               <!--&gt;-->
+                                    </div>
+                                </div>
+                                <div class="form-group row" baFieldFocusValidation [input]="service_cost">
+                                    <label class="col-sm-3 control-label">Cost</label>
+                                    <div class="col-sm-9">
+                                        <input type="number" name="cost" class="form-control" #service_cost="ngModel"
+                                               required
+                                               [ngModel]="editP.cost">
+                                        <ba-validation-message [input]="service_cost"></ba-validation-message>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 control-label">Tax</label>
+                                    <div class="col-sm-9">
+
+                                        <input type="number" name="tax" class="form-control"
+                                               [ngModel]="editP.tax">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 control-label">Commission</label>
+                                    <div class="col-sm-9">
+
+                                        <input type="number" name="commission" class="form-control"
+                                               [ngModel]="editP.commission">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-sm-3 control-label">Category</label>
+                                    <div class="col-sm-9">
+                                        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                                            <input [(ngModel)]="editP.category"
+                                                   name="category"
+                                                   [typeahead]="categories"
+                                                   typeaheadOptionField="name"
+                                                   class="form-control">
+                                            <div class="input-group-addon" (click)="addNewCat(editP.category)"
+                                                 *ngIf="!loadingCat&& isAddAble(editP.category)">+
+                                            </div>
+                                            <div class="input-group-addon" *ngIf="loadingCat"><i
+                                                    class="fa fa-spinner fa-spin"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </tab>
+                        <tab heading='Categories'>
+                            <app-categories></app-categories>
+                        </tab>
+                    </tabset>
+                </div>
+
+                <div class="modal-footer">
+
+                    <button style="margin-right: 30%" class="btn btn-danger pull-left" type="button" *ngIf="pId.value"
+                            (click)="removeProduct(editP)">Delete
+                    </button>
+                    <button class="btn confirm-btn" type="button" (click)="serviceEdit.hide()">Close
+                    </button>
+                    <button *ngIf="!pId.value" class="btn btn-primary confirm-btn" [disabled]="sf.invalid" type="submit">Save
+                        Changes
+                    </button>
+                  <button *ngIf="pId.value" class="btn btn-primary confirm-btn" [disabled]="sf.invalid" type="submit">Update
+                    Changes
+                  </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+

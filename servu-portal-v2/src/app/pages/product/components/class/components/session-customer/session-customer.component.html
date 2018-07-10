@@ -1,0 +1,56 @@
+<ba-card title="Customer" baCardClass="medium-card with-scroll" cardType="card-action"
+         (onAction)="createModel.show()"
+         baCardActionClass="fa fa-plus-circle">
+
+    <div *ngIf="!customers.length" class="text-center">
+        <div *ngIf="loading">
+            <i class="fa fa-spinner fa-spin"></i>
+        </div>
+        <div *ngIf="!loading">
+            it seams theres no you need to add
+        </div>
+    </div>
+
+    <ul class="list-group" *ngIf="customers.length">
+        <div *ngFor="let item of customers">
+          <div class="row" style="padding-bottom: 3px; padding-top: 3px">
+          <div class="col-sm-8">
+            <span class="session-user">{{item.business_user.user.name}}</span><br>
+            {{item.business_user.user.email}}
+          </div>
+          <div class="col-sm-4">
+            <i class="fa fa-minus-circle pull-right" (click)="remove(item)"></i>
+          </div>
+          </div>
+          <div class="line-hr"></div>
+        </div>
+    </ul>
+
+</ba-card>
+
+<div class="modal fade" bsModal #createModel="bs-modal"
+     tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+
+            <div class="modal-header">
+                <h4 class="modal-title pull-left">Schedule Class</h4>
+                <button type="button" class="close pull-right" aria-label="Close" (click)="createModel.hide()">
+                  <i class="ion-close" aria-hidden="true"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row customer-list-item" *ngFor="let item of allCustomers">
+                    <div class="col-8" >
+                        {{item.name}}
+                    </div>
+                    <div class="col-4">
+                        <button type="button" class="btn btn-primary" (click)="addParticipant(item)"> add</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

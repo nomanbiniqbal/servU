@@ -1,0 +1,194 @@
+<div class="card" style="height: 37rem; background-color: white;padding: 20px">
+    <h1 class="text-center">{{businessInfo.name.toUpperCase()}}</h1>
+    <h4 class="text-center" style="margin-top: -26px">Business details</h4>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)" class="form-horizontal col-sm-9 offset-sm-1">
+
+
+        <div class="form-group row"
+             [ngClass]="{
+       'has-error': (!form.get('personal_name').valid && form.get('personal_name').touched),
+       'has-success': (form.get('personal_name').valid && form.get('personal_name').touched)
+        }">
+            <label class="col-sm-3 control-label">Personal Name</label>
+            <div class="col-sm-9">
+                <input type="text" formControlName="personal_name" class="form-control" placeholder="Name">
+
+                <span class="help-block sub-little-text" style="color: red"
+                      *ngIf="form.get('personal_name').touched && form.get('personal_name').hasError('required')">This field is required</span>
+                <span class="help-block sub-little-text" style="color: red"
+                      *ngIf="form.get('personal_name').touched && form.get('personal_name').hasError('minlength')">min lencht is 4</span>
+            </div>
+        </div>
+
+
+        <div class="form-group row"
+             [ngClass]="{
+       'has-error': (!form.get('email').valid && form.get('email').touched),
+       'has-success': (form.get('email').valid && form.get('email').touched)
+        }">
+            <label class="col-sm-3 control-label">Personal Email</label>
+            <div class="col-sm-9">
+                <input type="email" formControlName="email" class="form-control" placeholder="Email">
+
+                <span class="help-block sub-little-text" style="color: red"
+                      *ngIf="form.get('email').touched && form.get('email').hasError('required')">This field is required</span>
+                <span class="help-block sub-little-text" style="color: red"
+                      *ngIf="form.get('email').touched && form.get('email').hasError('validateEmail')">Email is invalid</span>
+
+            </div>
+        </div>
+
+        <div formGroupName="passwords"
+
+             [ngClass]="{
+                  'has-error': (!form.get('passwords').get('password').valid &&
+                  form.get('passwords').get('password').touched &&
+                  form.get('passwords').get('repeatPassword').touched),
+                  'has-success': (form.get('passwords').get('password').valid &&
+                  form.get('passwords').get('password').touched &&
+                  form.get('passwords').get('repeatPassword').touched)
+                        }">
+            <div class="form-group row"
+                 [ngClass]="{
+       'has-error': (!form.get('passwords').get('password').valid && form.get('passwords').get('password').touched),
+       'has-success': (form.get('passwords').get('password').valid && form.get('passwords').get('password').touched)
+        }">
+                <label class="col-sm-3 control-label">Password</label>
+                <div class="col-sm-9">
+                    <input type="password" formControlName="password" class="form-control" placeholder="password">
+                </div>
+                <div *ngIf="form.get('passwords').get('password').touched" style="margin-left: 27%">
+          <span class="help-block sub-little-text" style="color: red "
+                *ngIf="form.get('passwords').get('password').hasError('minlength')">minimum lencht is 4</span>
+
+                    <span class="help-block sub-little-text" style="color: red "
+                          *ngIf="form.get('passwords').get('password').hasError('required')">This field is required</span>
+                </div>
+
+            </div>
+
+            <div class="form-group row"
+                 [ngClass]="{
+       'has-error': (!form.get('passwords').get('repeatPassword').valid && form.get('passwords').get('repeatPassword').touched),
+       'has-success': (form.get('passwords').get('repeatPassword').valid && form.get('passwords').get('repeatPassword').touched)
+        }">
+                <label class="col-sm-3 control-label">Confirm Password</label>
+                <div class="col-sm-9">
+                    <input type="password" formControlName="repeatPassword" class="form-control" placeholder="password">
+                </div>
+
+                <div *ngIf="form.get('passwords').get('repeatPassword').touched" style="margin-left: 27%">
+          <span class="help-block sub-little-text" style="color: red"
+                *ngIf="form.get('passwords').get('repeatPassword').hasError('minlength')">minimum lenght is 6</span>
+
+                    <span class="help-block sub-little-text" style="color: red"
+                          *ngIf="form.get('passwords').get('repeatPassword').hasError('required')">This field is required</span>
+                </div>
+
+
+                <span class="help-block sub-little-text" style="color: red;"
+                      *ngIf="form.get('passwords').get('password').touched
+            &&
+            form.get('passwords').get('repeatPassword').touched && form.get('passwords').hasError('passwordsEqual')"> <br>Password not matched</span>
+            </div>
+
+        </div>
+
+        <div class="form-group row"
+             [ngClass]="{
+       'has-error': (!form.get('telephone').valid && form.get('telephone').touched),
+       'has-success': (form.get('telephone').valid && form.get('telephone').touched)
+        }"
+        >
+            <label class="col-sm-3 control-label">Telephone</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" formControlName="telephone"
+                       placeholder="Mobile Number">
+            </div>
+
+            <span class="help-block sub-little-text" style="margin-left: 27%;color: red"
+                  *ngIf="form.get('telephone').touched && form.get('telephone').hasError('required')">This field is required</span>
+            <span class="help-block sub-little-text" style="margin-left: 27%;color: red"
+                  *ngIf="form.get('telephone').touched && form.get('telephone').hasError('validatePhone')">Incomplete</span>
+
+        </div>
+
+        <div class="form-group row"
+             [ngClass]="{
+       'has-error': (!form.get('address').valid && form.get('address').touched),
+       'has-success': (form.get('address').valid && form.get('address').touched)
+        }"
+        >
+            <label class="col-sm-3 control-label">Address</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" formControlName="address" placeholder="Your Location">
+            </div>
+            <span class="help-block sub-little-text" style="color: red;margin-left: 27%"
+                  *ngIf="form.get('address').touched && form.get('address').hasError('required')">This field is required</span>
+
+        </div>
+
+        <div class="form-group row" [ngClass]="{
+       'has-error': (!country_id && form.get('country_id').touched),
+       'has-success': (country_id && form.get('country_id').touched)
+        }">
+            <label class="col-sm-3 control-label">Country</label>
+            <div class="col-sm-9">
+                <input formControlName="country_id" class="form-control" [typeahead]="countries"
+                       typeaheadOptionField="nicename"
+                       (typeaheadOnSelect)="onCountrySelect($event)" placeholder="Controy">
+            </div>
+            <span class="help-block sub-little-text" style="color: red ;margin-left: 27%"
+                  *ngIf="form.get('country_id').touched && !country_id">Please pick any contry</span>
+
+
+        </div>
+        <div class="form-group row has-feedback"
+             [ngClass]="{
+       'has-error': (!form.get('zone_id').valid && form.get('zone_id').touched),
+       'has-success': (form.get('zone_id').valid && form.get('zone_id').touched)
+        }"
+        >
+            <label class="col-sm-3 control-label">Zone</label>
+            <div class="col-sm-9">
+                <select class="form-control" formControlName="zone_id">
+                    <option value="">Select</option>
+                    <option *ngFor="let zone of zones" value="{{zone.id}}">{{zone.zone_name}}</option>
+                </select>
+                <div *ngIf="searchingZones" class="form-control-feedback2">
+                    <i class="fa fa-spin fa-spinner" aria-hidden="true"></i>
+                    <span class="sr-only">(loading)</span>
+                </div>
+
+                <span class="help-block sub-little-text" style="color: red"
+                      *ngIf="form.get('zone_id').touched && form.get('zone_id').hasError('required')">This field is required please choose Contry </span>
+            </div>
+        </div>
+
+        <div class="form-group row" *ngFor="let error of errors">
+            <div class="col-sm-12 text-center">
+                {{error}}
+            </div>
+        </div>
+
+
+        <div class="form-group row">
+            <div class="col-sm-5 text-center">
+                <button [disabled]="!form.valid" type="submit" class="btn btn-primary btn-auth">Get Started</button>
+            </div>
+            <div class="col-sm-2">
+                <i *ngIf="progressBarSwitch " class="fa fa-refresh fa-spin fa-2x fa-fw" aria-hidden="true"></i>
+                <span class="sr-only">Refreshing...</span>
+            </div>
+
+            <div class="col-sm-5">
+                <button class="float-right btn back-btn btn-primary btn-with-icon" (click)="onBack()"><i
+                        class="fa fa-backward"></i>Back
+                </button>
+            </div>
+
+        </div>
+
+    </form>
+</div>

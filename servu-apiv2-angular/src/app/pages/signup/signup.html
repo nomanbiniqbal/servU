@@ -1,0 +1,16 @@
+<div *ngIf="!show" class="auth-main animated bounceIn" [ngStyle]="{background: 'url(' + object.link + ')'}">
+
+
+  <ba-card class=" col-sm-5 text-center "   style="margin-left: 29%;height: 40%; position: relative" (onAction)="serviceEdit.show()"
+           cardType="card-action"
+  >
+    <business-auth (businessInfo)="onBusinessSubmit($event)"></business-auth>
+  </ba-card>
+</div>
+
+<div *ngIf="show" class="auth-main animated bounceIn" [ngStyle]="{background: 'url(' + object.link + ')'}">
+  <div class="auth-block">
+    <business-setup [businessInfo]="businessInfo" (businessSetup)="onBusinessSetup($event)"></business-setup>
+  </div>
+</div>
+

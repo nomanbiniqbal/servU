@@ -1,0 +1,67 @@
+.padding-15 {
+  padding: 0 30px;
+}
+
+.slot-div {
+  .selected {
+    cursor: pointer;
+    height: 25px;
+    width: 25px;
+    color: white;
+    background: deepskyblue;
+    border: 2px solid;
+    border-radius: 50%;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 25px;
+    margin: 0 auto;
+  }
+
+}
+
+.overview-sep {
+  margin-top: 36px;
+  margin-bottom: 24px;
+  line-height: 20px;
+  font-size: 16px;
+  text-align: center;
+  display: block;
+  position: relative;
+  & > span {
+    display: table-cell;
+    width: 30%;
+    white-space: nowrap;
+    padding: 0 24px;
+    & > span {
+      margin-top: -12px;
+      display: block;
+    }
+  }
+  &:before, &:after {
+    border-top: solid 1px black;
+    content: "";
+    height: 1px;
+    width: 35%;
+    display: table-cell;
+  }
+}
+
+.slot-div {
+  padding: 10px;
+  .calendar-pane {
+    border: 1px solid gray;
+    padding: 10px;
+    .bd-col {
+      float: left;
+      width: 14.2%
+    }
+  }
+
+}
+
+.drag-target-border {
+  .card-body {
+    border: 2px dashed #ececec;
+  }
+}
+

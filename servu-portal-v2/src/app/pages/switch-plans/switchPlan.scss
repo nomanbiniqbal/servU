@@ -1,0 +1,65 @@
+@import '../../theme/sass/auth';
+
+switch-plan {
+  $primary-color: #1c92da;
+  .subscription-type {
+    padding-left: 0px;
+    .payment {
+      background: #f0f0f0;
+      border-radius: 5px;
+      padding-bottom: 10px;
+      > header {
+        padding: 5px;
+      }
+      .my-label {
+        color: #fff;
+        padding: 15px;
+        background: $primary-color;
+        display: block;
+        position: relative;
+        .strick {
+          text-decoration: line-through;
+        }
+        .free {
+          position: absolute;
+          top: 2px;
+          left: 70px;
+          color: #edea52;
+        }
+      }
+      > ul {
+        height: 200px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        padding: 5px 5px;
+        > li {
+          list-style-type: none;
+          margin-bottom: 5px;
+          text-align: center;
+          font-size: smaller;
+        }
+      }
+      .btn.btn-blue {
+        margin: 10px 0;
+      }
+    }
+  }
+}
+
+.image {
+  width: 100px;
+  height: 100px;
+}
+
+.profile-image {
+  background-repeat: no-repeat;
+  background-position: 50%;
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+}
+
+.background-img {
+  width: 100%;
+  height: 100vh;
+}

@@ -1,0 +1,49 @@
+<div class="container">
+
+    <div class="form-group row">
+        <div class="col-8">
+            <form #sf="ngForm"  autocomplete="off">
+
+            <input class="form-control" placeholder="Add new" ngModel
+                   name="add_new"
+                   #search="ngModel" required >
+            </form>
+        </div>
+        <div class="col-4">
+            <button class="btn btn-primary" type="button" [disabled]="sf.invalid" (click)="addCategory(search.value)">Add</button>
+            <i *ngIf="loadingbar" style="margin-left: 4%;margin-top: 2%" class="fa fa-refresh fa-spin  fa-fw"></i>
+
+        </div>
+    </div>
+
+    <ul class="list-group">
+<div class="with-scroll-set">
+        <div class="listitem row" *ngFor="let c of categories">
+
+
+            <div class="col-8" *ngIf="c.editMode">
+                <form #f="ngForm">
+                    <input type="hidden" name="id" #id1="ngModel" [ngModel]="c.id">
+                    <input type="text" class="form-control " #name1="ngModel" [(ngModel)]="c.name" name="name">
+                </form>
+            </div>
+
+
+            <div class="col-8" *ngIf="!c.editMode">
+                {{c.name}}
+            </div>
+
+            <i *ngIf="!c.editMode" class="fa fa-edit  col-sm-2" (click)="c.editMode=true"></i>
+            <i *ngIf="c.editMode" class="fa fa-check-square col-2" (click)="editCat({'id':c.id,'name':c.name},c)"></i>
+            <i class="fa fa-trash  col-sm-2"(click)="deleteCat(c.id)"></i>
+            <div class="hr" style="color: #1C2B36">
+                <hr class="list-group">
+            </div>
+            <hr style="width: 100%; height: 10%">
+
+
+        </div>
+</div>
+
+    </ul>
+</div>

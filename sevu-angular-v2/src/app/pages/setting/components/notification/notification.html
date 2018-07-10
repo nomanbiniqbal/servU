@@ -1,0 +1,182 @@
+<div class="row">
+    <ba-card class="col-xlg-4 col-xl-3 col-lg-3 col-sm-4 col-xs-12"
+             cardType="card-action"
+             baCardClass="viewport100" title="">
+        <div class="row">
+            <notification-provider-list class="col-sm-20 col-xs-12"></notification-provider-list>
+        </div>
+
+    </ba-card>
+    <ba-card class="col-xlg-9 col-xl-9 col-lg-9 col-sm-9 col-xs-12" baCardClass="viewport100">
+
+        <div class="row">
+            <div class="col-sm-5">
+                <h3>
+                    <span class="label label-default">Body prizing</span>
+                </h3>
+            </div>
+        </div>
+        <form class="form-inline">
+            <div class="form-group">
+                <label class="col-sm-1">Periodic Service</label>
+                <div class="col-sm-5">
+                    <ui-switch></ui-switch>
+                </div>
+                <label class="form-control-label col-sm-1" for="pwd">Time Period</label>
+                <div class="col-sm-4">
+                    <input type="password" class="form-control" id="pwd" placeholder="Enter Days">
+                </div>
+            </div>
+
+        </form>
+
+
+        <tabset>
+            <tab (select)="alertMe()" heading="Reminder">
+                <reminder-list></reminder-list>
+            </tab>
+            <tab (select)="alertMe()">
+                <template tabHeading>
+                    Follow Up
+                </template>
+                <followUp-list></followUp-list>
+
+            </tab>
+
+            <button style="position: absolute;left: 88.5%;top:18.5% " *ngIf="switch " class="btn btn-primary btn-sm"
+                    data-toggle="modal" (click)="staticModal.show()">Add More
+            </button>
+            <button style="position: absolute;left: 88.5%;top:18.5% " *ngIf="!switch " class="btn btn-primary btn-sm"
+                    data-toggle="modal" (click)="reminder.show()">ADD More
+            </button>
+
+
+        </tabset>
+
+
+    </ba-card>
+
+
+    <div class="modal fade" id="myModalHorizontal1" bsModal #staticModal="bs-modal" [config]="{backdrop: 'static'}"
+         tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" aria-label="Close" (click)="staticModal.hide()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Reminder</h4>
+                </div>
+                <div class="modal-body">
+                    <form #d="ngForm" class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <div class="col-sm-10">
+                                <label>Hours</label>
+                                <select class="form-control" [(ngModel)]="user.hour"
+                                        [ngModelOptions]="{standalone: true}">
+                                    <option>0</option>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                    <option>6</option>
+                                    <option>7</option>
+                                    <option>8</option>
+                                    <option>9</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-10">
+                                <label for="Days">Days</label>
+                                <select class="form-control" #days="ngModel" [(ngModel)]="user.day"
+                                        [ngModelOptions]="{standalone: true}" id="Days">
+                                    <option>0</option>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                    <option>6</option>
+                                    <option>7</option>
+                                    <option>8</option>
+                                    <option>9</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="booking">Before Booking Text</label>
+                            <div class="col-sm-10">
+                                <textarea [(ngModel)]="user.text" #days="ngModel" [ngModelOptions]="{standalone: true}"
+                                          rows="4" id="booking" cols="31"
+                                          placeholder="Enter Notification Text"></textarea>
+                            </div>
+                        </div>
+
+
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary btn-auth" type="button"
+                            (click)="savedata(reminder);staticModal.hide();">Save changes
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" bsModal #reminder="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog"
+         aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" aria-label="Close" (click)="reminder.hide()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Follow ups</h4>
+                </div>
+                <div style="padding: 0px" class="modal-body">
+                    <form #f="ngForm" (ngSubmit)="login()" class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <div class="col-sm-10">
+                                <label for="followDays">Days</label>
+                                <select class="form-control" #followhours="ngModel" [(ngModel)]="follow.hour"
+                                        [ngModelOptions]="{standalone: true}" id="followDays">
+                                    <option>0</option>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                    <option>6</option>
+                                    <option>7</option>
+                                    <option>8</option>
+                                    <option>9</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label
+                                    for="followbooking">Before Booking Text</label>
+                            <div class="col-sm-10">
+                                <textarea rows="4" #followtext="ngModel" [(ngModel)]="follow.text"
+                                          [ngModelOptions]="{standalone: true}" id="followbooking" cols="31"
+                                          placeholder="Enter Notification Text"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary btn-auth" type="button" (click)="savedatafollowup();reminder.hide()">
+                        Save changes
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>

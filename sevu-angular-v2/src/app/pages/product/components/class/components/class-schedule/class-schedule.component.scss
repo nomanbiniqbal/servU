@@ -1,0 +1,36 @@
+app-class-schedule {
+
+  ul {
+    background-color: #ffffff;
+  }
+
+  /*li:hover {
+    background-color: #f0f3f4;
+    cursor: pointer;
+  }*/
+
+  .OnSelected {
+    background-color: #f0f3f4;
+
+  }
+  .with-scroll {
+    height: calc(100% - 105px);
+    overflow-y: auto;
+  }
+  .list-item {
+
+    background-color: #ffffff;
+    line-height: 30px;
+    padding-left: 20%;
+    border-radius: 5px;
+  }
+
+  .list-item:hover {
+
+    cursor: pointer;
+  }
+
+}
+
+
+

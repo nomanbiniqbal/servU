@@ -1,0 +1,148 @@
+
+<ba-card baCardClass="notification-card-height with-scroll" class="no-body-padding" *ngIf="pId" title="NOTIFICATIONS">
+
+    <tabset [justified]="true">
+        <tab *ngFor="let item of types">
+            <template tabHeading>
+                <i class="fa fa-plus-circle" (click)="addNew(item.id)"></i> {{item.name}}
+            </template>
+            <ul class="list-group">
+                <div class="container">
+                    <div class="row">
+
+                        <div class="col-6">
+                            <label class="card-title">Details</label>
+                        </div>
+                        <div class="col-2">
+                            <label class="card-title pull-right">Time</label>
+                        </div>
+                        <div class="col-2">
+                            <label class="card-title pull-right">Type</label>
+                        </div>
+                        <div class="col-2" style="padding-left: 0px;">
+                            <label class="card-title pull-right">Edit</label>
+                        </div>
+
+
+                    </div>
+                  <div class="hr"></div>
+                </div>
+
+                <li class="with-scroll" *ngFor="let item of filterd(notifications,item.id)">
+
+
+                    <div class="container">
+
+                        <div class="row">
+
+                            <div class="col-6">
+                                <p>{{item.notification_text}}</p>
+                            </div>
+                            <div class="col-2">
+                                <p class="pull-right">{{item.notification_time}}</p>
+                            </div>
+                            <div class="col-2">
+                                <p class="pull-right">{{item.notification_type}}</p>
+                            </div>
+
+
+                            <div class="col-2">
+                                <i class="fa fa-edit pull-right" (click)="edit(item)"></i>
+                            </div>
+                        </div>
+<div class="hr"></div>
+                    </div>
+
+
+                </li>
+
+            </ul>
+
+        </tab>
+    </tabset>
+
+</ba-card>
+
+
+<div class="modal fade" bsModal #nModal="bs-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <form #f="ngForm" (ngSubmit)="submit(f.value)">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" name="header_name"> {{header_name}}</h4>
+                    <button class="close" aria-label="Close" (click)="nModal.hide()" type="button">
+                      <i class="ion-close" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="product_id" ngModel>
+                    <input type="hidden" name="notification_type_id" ngModel>
+                    <input type="hidden" name="id" ngModel #i="ngModel">
+                    <div class="form-group row">
+                      <div class="col-sm-4">
+                        <label class="col-sm-12">Notification type</label>
+                        <div class="col-sm-12">
+                            <div class="row">
+                                <div class="form-check col-sm-12">
+                                    <label>
+                                        <input class="form-check-input" type="radio" name="notification_type"
+                                               value="pre"
+                                               ngModel> Pre
+                                    </label>
+                                </div>
+
+                                <div class="form-check col-sm-12">
+                                    <label>
+                                        <input class="form-check-input" type="radio" name="notification_type"
+                                               ngModel
+                                               value="post"> Post
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-8">
+                        <label> Notification Times</label>
+                        <div class="row">
+                          <div class="col-6">
+                            <div class="form-group">
+                              <input ngModel name="notification_time" class="form-control"
+                                     type="number" min="1" max="999"></div>
+                          </div>
+                          <div  class="col-6">
+                            <div  class="form-group">
+                              <select class="form-control">
+                                <option>Minute</option>
+                                <!--<option>Hour</option>-->
+                                <!--<option>Day</option>-->
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            Notification Text
+                        </label>
+                        <textarea class="form-control" ngModel name="notification_text">
+                        </textarea>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <div class="col-sm-7">
+                        <button class="btn btn-danger" *ngIf="i.value" type="button" (click)="remove(i.value)">
+                            Delete
+                        </button>
+                    </div>
+                    <button class="btn btn-primary btn-auth" [disabled]="f.invalid" type="submit">Save changes</button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>
+

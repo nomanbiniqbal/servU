@@ -1,0 +1,36 @@
+<div class="page-top clearfix" baScrollPosition maxHeight="50" (scrollChange)="scrolledChanged($event)"
+     [ngClass]="{scrolled: isScrolled}">
+  <a routerLink="/pages/dashboard" class="al-logo clearfix">serv<span>U</span></a>
+  <a href (click)="toggleMenu()" class="collapse-menu-link ion-navicon"></a>
+
+
+  <div class="setup-progress">
+    <div class="row action-row">
+      <div class="col-sm-3">
+        <button class="btn btn-outline-secondary btn-sm">Business Setup</button>
+      </div>
+      <div class="col-sm-3">
+        <button class="btn btn-outline-secondary btn-sm" disabled>Provider Setup</button>
+      </div>
+    </div>
+    <div class="row">
+      <progress class="progress progress-striped" [value]="random" max="100"></progress>
+    </div>
+  </div>
+
+
+  <div class="user-profile clearfix">
+    <div class="dropdown al-user-profile">
+      <a class="profile-toggle-link dropdown-toggle" id="user-profile-dd" data-toggle="dropdown" aria-expanded="false">
+        <img src="{{ ( 'Nasta' | baProfilePicture ) }}">
+      </a>
+
+      <ul class="dropdown-menu top-dropdown-menu profile-dropdown" aria-labelledby="user-profile-dd">
+        <li class="dropdown-item"><i class="dropdown-arr"></i></li>
+        <li class="dropdown-item"><a href><i class="fa fa-user"></i>Profile</a></li>
+        <li class="dropdown-item"><a href><i class="fa fa-cog"></i>Settings</a></li>
+        <li class="dropdown-item"><a class="signout" (click)="logout()"><i class="fa fa-power-off"></i>Sign out</a></li>
+      </ul>
+    </div>
+  </div>
+</div>

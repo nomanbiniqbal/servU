@@ -1,0 +1,15 @@
+<accordion closeOthers="true">
+  <div *ngFor="let item of list">
+    <accordion-group  #group *ngIf="item.type=='cat'">
+      <div accordion-heading>
+        <i  class="fa fa-book fa-fw" aria-hidden="true"></i> {{item.label}}
+        <i class="pull-right float-xs-right glyphicon"
+           [ngClass]="{'glyphicon-chevron-down': group?.isOpen, 'glyphicon-chevron-right': !group?.isOpen}"></i>
+      </div>
+      <div class="row" *ngFor="let serviceItem of item.services">
+        {{serviceItem.label}}
+      </div>
+    </accordion-group>
+
+  </div>
+</accordion>

@@ -1,0 +1,278 @@
+<div class="row">
+    <div class="col-3">
+        <ba-card title="List" baCardClass="card-padding-member-list" cardType="card-action" baCardActionClass="fa fa-plus-circle"
+                 class="no-body-padding"
+                 (onAction)="new()">
+            <app-membership-list (select)="onSelect($event)"></app-membership-list>
+        </ba-card>
+    </div>
+    <div class="col-9">
+        <div class="row">
+            <ba-card [title]="selectedM.membership_name" baCardClass="small-card"
+                     class="col-12"
+                     (onAction)="edit(selectedM)"
+                     cardType="card-action" [baCardActionClass]="selectedM.id?'fa fa-pencil-square-o':''">
+                <app-membership-detail [membership]="selectedM"></app-membership-detail>
+            </ba-card>
+        </div>
+        <div class="row">
+            <app-membership-price *ngIf="selectedM.id" class="col-4"
+                                  [membershipID]="selectedM.id"></app-membership-price>
+            <app-membership-product *ngIf="selectedM.id" class="col-4"
+                                    [membershipID]="selectedM.id"></app-membership-product>
+            <app-membership-branch *ngIf="selectedM.id" class="col-4"
+                                   [membershipID]="selectedM.id"></app-membership-branch>
+        </div>
+
+    </div>
+</div>
+
+
+<div bsModal #membershipModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+     aria-labelledby="myLargeModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form #f="ngForm" (ngSubmit)="submit(f.value)" autocomplete="off">
+                <input type="hidden" name="id" ngModel>
+
+                <div class="modal-header">
+                    <h4 class="modal-title">Add Memebers</h4>
+                    <button class="close" type="button" (click)="membershipModal.hide()" aria-label="Close">
+                      <i class="ion-close" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label>Membership Name</label>
+                                <input type="text" [ngModel]="m.membership_name" placeholder="Name"
+                                       name="membership_name" required class="form-control">
+                            </div>
+                            <div class="">
+                                <label>Duration</label>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label>From</label>
+
+                                            <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                                                <input [ngModel]="m.affected_from|baDate:'MMMM DD, YYYY'"
+
+                                                       ngx-mydatepicker
+                                                       (focus)="dp.toggleCalendar()"
+                                                       #dp="ngx-mydatepicker"
+                                                       name="affected_from"
+                                                       class="form-control"
+                                                       [options]="myOptions">
+                                                <div class="input-group-addon" (click)="dp.toggleCalendar()">
+                                                    <i class="fa fa-calendar"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label>To</label>
+
+                                            <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                                                <input [ngModel]="m.affected_to|baDate:'MMMM DD, YYYY'"
+                                                       ngx-mydatepicker
+                                                       (focus)="dp2.toggleCalendar()"
+                                                       #dp2="ngx-mydatepicker"
+                                                       name="affected_to"
+                                                       class="form-control"
+                                                       [options]="myOptions">
+                                                <div class="input-group-addon" (click)="dp2.toggleCalendar()">
+                                                    <i class="fa fa-calendar"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <label>Price</label>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>Week <input type="checkbox" name="price_week" ngModel></label>
+                                            <input type="text" class="form-control" name="price_week_val" ngModel>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>Month <input type="checkbox" name="price_month" ngModel></label>
+                                            <input type="text" class="form-control" name="price_month_val" ngModel>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>Year <input type="checkbox" name="price_year" ngModel></label>
+                                            <input type="text" class="form-control" name="price_year_val" ngModel>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <label>Branch</label>
+                                <div>
+                                    <ul class="col-12 list-group branch-list" ngModelGroup="branch">
+                                        <li class="list-group-item" *ngFor="let item of branches;let i=index;"
+                                            style="padding: 20px">
+                                            <label class="checkbox" [ngModelGroup]="i">
+                                                <input type="hidden" name="id" [ngModel]="item.id" *ngIf="noReset">
+                                                <input type="checkbox" name="checked" ngModel> {{item.branch_name}}
+                                            </label>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-6" ngModelGroup="products">
+                            <div class="row">
+                                <div class="col-6">
+                                    <h4>Inclusions</h4>
+                                </div>
+                                <div class="col-6">
+                                    <i class="fa fa-plus-circle pull-right"
+                                       (click)="m.membership_business_product.push({business_product:{}})"></i>
+                                </div>
+                            </div>
+                            <div class="form-group row"
+                                 *ngFor="let item of m.membership_business_product;let i1=index;"
+                                 ngModelGroup="{{i1}}">
+                                <div class="col-3 custom-padding">
+                                    <select class="form-control" [(ngModel)]="item.business_product.product_type"
+                                            #type="ngModel"
+                                            name="type">
+                                        <option value="undefined">Select</option>
+                                        <option value="service">Service</option>
+                                        <option value="class">Class</option>
+                                    </select>
+                                </div>
+                                <div class="col-4 custom-padding">
+                                    <ba-select2 [options]="type.value=='service'?service:classes"
+                                                fieldName="name"
+                                                name="business_product_id"
+                                                [ngModel]="item.business_product.id"
+                                                modalFieldName="id"
+                                                placeholder="Please Select Product"></ba-select2>
+                                </div>
+                                <div class="col-2 custom-padding">
+                                    <select class="form-control" name="counter_type" [ngModel]="item.counter_type">
+                                        <option value="undefined">Select</option>
+                                        <option value="1">Week</option>
+                                        <option value="2">Month</option>
+                                        <option value="3">Year</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-2 custom-padding">
+                                    <select class="form-control" name="counter" [ngModel]="item.counter">
+                                        <option value="undefined">Select</option>
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-1 custom-padding no-padding-right">
+                                    <i class="fa fa-minus-circle"
+                                       *ngIf="i1>=1"
+                                       (click)="m.membership_business_product.splice(i1,1)"></i>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary auth-input" [disabled]="f.invalid">Save</button>
+                    <i *ngIf="progressIcon" class="fa fa-refresh fa-spin fa-2x fa-fw" aria-hidden="true"></i>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!--Edit -->
+
+<div bsModal #meditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+     aria-labelledby="myLargeModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <form #f2="ngForm" (ngSubmit)="editSubmit(f2.value)" autocomplete="off">
+                <input type="hidden" name="id" ngModel>
+
+                <div class="modal-header">
+                    <h4 class="modal-title">Memebers Edit</h4>
+                    <button class="close" type="button" (click)="meditModal.hide()" aria-label="Close">
+                      <i class="ion-close" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <input type="hidden" ngModel name="id" #id="ngModel">
+
+                        <div class="form-group">
+                            <label>Membership Name</label>
+
+                            <input type="text" ngModel placeholder="Name"
+                                   name="membership_name" required class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Duration(From)</label>
+
+                            <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                                <input ngModel
+                                       ngx-mydatepicker
+                                       (focus)="edp.toggleCalendar()"
+                                       #edp="ngx-mydatepicker"
+                                       name="affected_from"
+                                       class="form-control">
+                                <div class="input-group-addon" (click)="edp.toggleCalendar()">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="form-group">
+                            <label>Duration(To)</label>
+
+                            <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                                <input ngModel
+                                       ngx-mydatepicker
+                                       (focus)="edp2.toggleCalendar()"
+                                       #edp2="ngx-mydatepicker"
+                                       name="affected_to"
+                                       class="form-control">
+                                <div class="input-group-addon" (click)="edp2.toggleCalendar()">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <i *ngIf="progressIcon" class="fa fa-refresh fa-spin fa-2x fa-fw" aria-hidden="true"></i>
+                    <button class="btn btn-danger" type="button" (click)="remove(id.value)">Delete</button>
+                    <button class="btn btn-primary auth-input" [disabled]="f2.invalid">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+

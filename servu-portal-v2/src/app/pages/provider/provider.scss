@@ -1,0 +1,11 @@
+provider {
+
+  iframe {
+    &[id^='ssIFrame_google'] {
+      display: none;
+    }
+  }
+}
+
+
+

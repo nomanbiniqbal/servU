@@ -1,0 +1,67 @@
+
+    <h1>Sign up to ServU</h1>
+<a routerLink="/login" class="auth-link">Already have an ServU account? Sign in!</a>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit(form.value)" class="form-horizontal col-sm-8 offset-sm-2">
+
+
+  <div class="form-group row"
+       [ngClass]="{'has-error': (!businessName.valid && businessName.touched),
+        'has-success': (businessName.valid && businessName.touched),
+        'has-feedback':businessName.pending||businessName.valid||!businessName.valid}">
+
+    <label for="inputName3" class="col-sm-3 control-label">Business Name</label>
+
+    <div class="col-sm-9">
+
+      <input [formControl]="businessName" type="text" class="form-control" id="inputName3" placeholder="Business Name">
+
+      <div *ngIf="businessName.pending">
+        <i class=" fa fa-spin fa-spinner form-control-feedback" aria-hidden="true"></i>
+        <span class="sr-only">(loading)</span>
+      </div>
+      <div *ngIf="businessName.errors&&businessName.errors['ajaxError']">
+        <i class="ion-alert-circled form-control-feedback" aria-hidden="true"></i>
+        <span  class="sr-only">(error)</span>
+      </div>
+      <div *ngIf="businessName.valid">
+        <i class="ion-checkmark-circled form-control-feedback" aria-hidden="true"></i>
+        <span  class="sr-only">(success)</span>
+      </div>
+      <span class="help-block sub-little-text">{{businessName.getError('ajaxError')}}</span>
+    </div>
+
+  </div>
+
+  <div class="form-group row"
+       [ngClass]="{'has-error': (!businessEmail.valid && businessEmail.touched), 'has-success': (businessEmail.valid && businessEmail.touched)}">
+    <label for="inputEmail3" class="col-sm-3 control-label">Email</label>
+
+    <div class="col-sm-9">
+      <input [formControl]="businessEmail" type="email" class="form-control" id="inputEmail3" placeholder="Email">
+      <div *ngIf="businessEmail.pending">
+        <i class=" fa fa-spin fa-spinner form-control-feedback" aria-hidden="true"></i>
+        <span class="sr-only">(loading)</span>
+      </div>
+      <div *ngIf="businessEmail.getError('ajaxError')">
+        <i class="ion-alert-circled form-control-feedback" aria-hidden="true"></i>
+        <span  class="sr-only">(error)</span>
+      </div>
+      <div *ngIf="businessEmail.valid">
+        <i class="ion-checkmark-circled form-control-feedback" aria-hidden="true"></i>
+        <span  class="sr-only">(success)</span>
+      </div>
+      <span class="help-block sub-little-text">{{businessEmail.getError('ajaxError')}}</span>
+    </div>
+  </div>
+
+
+  <div class="form-group row">
+    <div class="col-sm-12 text-center">
+      <button [disabled]="!form.valid" type="submit" class="btn btn-default btn-auth">Sign up</button>
+    </div>
+  </div>
+</form>
+
+
+

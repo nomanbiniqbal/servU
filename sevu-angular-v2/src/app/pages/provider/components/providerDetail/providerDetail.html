@@ -1,0 +1,169 @@
+<ba-card  baCardClass="medium-card"
+          [title]="pro.name"
+          [baCardActionClass]="pro.id?'fa fa-edit':''"
+         (onAction)="popup.edit(pro)">
+    <div class="container text-center" *ngIf="!pro.id" style="padding: 100px">
+     <i class="fa fa-male" style="font-size: 50px"></i><br><br>
+        <h3 class="text-center" *ngIf="!loading">Please Select Any Provider</h3>
+      <p>If there is no provider first add new provider</p>
+        <div class="text-center"><span *ngIf="loading"><i class="fa fa-spin fa-spinner"></i> </span></div>
+    </div>
+
+    <div class="container" *ngIf="pro.id">
+
+        <div class="row">
+
+            <div class="col-sm-4">
+                <div class="row">
+
+                    <label class="card-title">Email :</label>
+                    <div class="col-sm-7">
+                        {{pro.email}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-4">
+                <h4 class="card-title">Addresses<i class="fa fa-plus-circle pull-right" (click)="createAddress()"></i>
+                </h4>
+                <hr>
+                <div style="height:250px;width:250px; overflow-x:scroll ; overflow-y: scroll; padding-bottom:10px;">
+                    <div style="text-align: left" *ngFor="let a of addressList">
+                        <i class="fa fa-edit pull-left" (click)="editAddress(a)"></i>
+                        {{a.address}}
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-sm-4">
+                <h4 class="card-title">Contact<i class="fa fa-plus-circle pull-right" (click)="createContact()"></i>
+                </h4>
+                <hr>
+
+                <div style="height:250px;width:250px; overflow-x:scroll ; overflow-y: scroll; padding-bottom:10px; text-align: right;">
+
+                    <div style="text-align: left" *ngFor="let c of contactList">
+                        <i class="fa fa-edit pull-left" (click)="editContact(c)"></i>
+                        {{c.phone_number}}
+
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+</ba-card>
+
+<div bsModal #addressModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+     aria-labelledby="myLargeModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <form #f="ngForm" (ngSubmit)="submitAddress(f.value)" autocomplete="off">
+
+                <div class="modal-header">
+
+                  <h4 class="modal-title" *ngIf="!ad.id">Add Address</h4>
+                  <h4 class="modal-title" *ngIf="ad.id">Edit Address</h4>
+                  <button class="close" type="button" (click)="addressModal.hide()" aria-label="Close">
+                    <i class="ion-close" aria-hidden="true"></i>
+                  </button>
+                </div>
+                <!--<div class="modal-body">-->
+                <input type="hidden" name="user_id" [ngModel]="pro.id">
+                <input type="hidden" name="address_id" [ngModel]="ad.id" #id="ngModel">
+
+                <div class="form-group row">
+                    <label class="col-sm-2 control-label">Address</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" required placeholder="Address"
+                               name="address"
+                               [ngModel]="ad.address">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-2 control-label">is primary</label>
+                    <div class="col-sm-8">
+                        <ui-switch name="is_primary" [ngModel]="ad.is_primary" ></ui-switch>
+                    </div>
+                </div>
+
+
+                <div class="modal-footer">
+                    <button class="btn btn-secondary confirm-btn" type="button" (click)="addressModal.hide()">Close
+                    </button>
+                    <button class="btn btn-primary confirm-btn" type="submit">Save changes</button>
+                    <button class="btn btn-danger confirm-btn pull-left" type="button" (click)="deleteAddress(id.value)"
+                            *ngIf="id.value">Delete
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<div bsModal #contactModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+     aria-labelledby="myLargeModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <form #cf="ngForm" (ngSubmit)="submitContact(cf.value)" autocomplete="off">
+
+                <div class="modal-header">
+                  <h4 class="modal-title" *ngIf="!cn.id">Add Contact</h4>
+                  <h4 class="modal-title" *ngIf="cn.id">Edit Contact</h4>
+                  <button class="close" type="button" (click)="contactModal.hide()" aria-label="Close">
+                    <i class="ion-close" aria-hidden="true"></i>
+                  </button>
+                </div>
+                <input type="hidden" name="user_id" [ngModel]="pro.id">
+                <input type="hidden" name="contact_id" [ngModel]="cn.id" #cid="ngModel">
+
+                <div class="form-group row">
+                    <label class="col-sm-3 control-label">Phone Number</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" required placeholder="Phone Number"
+                               name="phone_number"
+                               [ngModel]="cn.phone_number">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 control-label">Country Code</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" required placeholder="Phone Country Code"
+                               name="phone_country_code"
+                               [ngModel]="cn.phone_country_code">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-2 control-label">is primary</label>
+                    <div class="col-sm-8">
+                        <ui-switch name="is_public" [ngModel]="cn.is_public"></ui-switch>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-secondary confirm-btn" type="button" (click)="contactModal.hide()">Close
+                    </button>
+                    <button class="btn btn-primary confirm-btn" type="submit">Save changes</button>
+                    <button class="btn btn-danger confirm-btn pull-left" type="button"
+                            (click)="deleteContact(cid.value,pro.id)"
+                            *ngIf="cid.value">Delete
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+<provider-popup #popup></provider-popup>

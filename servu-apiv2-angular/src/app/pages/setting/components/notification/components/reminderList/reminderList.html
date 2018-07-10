@@ -1,0 +1,24 @@
+<div class="feed-messages-container with-scroll">
+  <div class="feed-message" *ngFor="let message of list" (click)="expandMessage(message)">
+    <div class="text-block text-message">
+      <div class="message-header">
+        <span class="author"> {{ message.hour}} {{ 'Hours' }} {{','}} {{message.day}} {{'days'}} {{','}} {{'are left'}} </span>
+      </div>
+      <div class="message-content line-clamp" [ngClass]="{'line-clamp-2' : !message.expanded}">
+        <span *ngIf="message.preview">{{ message.header }} </span>{{ message.text }}
+      </div>
+
+
+
+
+      <div [ngClass]="{'hidden': !message.expanded}" class="message-time">
+        <div class="post-time">
+          {{ message.time }}
+        </div>
+        <div class="ago-time">
+          {{ message.ago }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

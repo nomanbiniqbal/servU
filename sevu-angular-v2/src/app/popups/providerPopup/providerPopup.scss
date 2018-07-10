@@ -1,0 +1,14 @@
+provider-popup {
+  .float-right {
+    float: right;
+    padding-left: 500px;
+  }
+  .float-left {
+    float: left;
+  }
+  .close{
+    position: absolute;
+    top:0;
+    right: 0;
+  }
+}

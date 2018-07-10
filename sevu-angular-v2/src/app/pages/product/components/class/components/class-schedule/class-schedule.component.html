@@ -1,0 +1,188 @@
+<ba-card title="Class schedule" baCardClass="medium-card with-scroll" cardType="card-action"
+         (onAction)="screateModel.show()"
+         baCardActionClass="fa fa-plus-circle">
+
+    <div>
+        <div *ngIf="!scheduleList.length">
+            <div class="text-center" *ngIf="loading">
+                <i class="fa fa-spinner fa-spin"></i>
+            </div>
+            <div *ngIf="!loading">
+                it seams theres no you need to add
+            </div>
+        </div>
+
+
+        <ul class="list-group">
+            <div *ngFor="let item of scheduleList" class="list-item" (click)="select(item)"
+                 [ngClass]="{OnSelected: item.id==selectedId}">
+                <div class="row">
+
+                    {{item.start_at}}
+
+                    <div class="col-sm-1">
+                        <i class="fa fa-trash" tooltip="Delete" (click)="editSchedule(item)"></i></div>
+                </div>
+            </div>
+
+        </ul>
+    </div>
+</ba-card>
+
+<div class="modal fade" bsModal #screateModel="bs-modal"
+     tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form #f="ngForm" (ngSubmit)="submit(f.value)">
+
+                <div class="modal-header">
+                    <h4 class="modal-title pull-left">Schedule Class</h4>
+                    <button type="button" class="close pull-right" aria-label="Close" (click)="screateModel.hide()">
+                      <i class="ion-close" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="product_id" [ngModel]="_id">
+                    <!--<input type="hidden" name="product_id" [ngModel]="_id">-->
+                    <input type="hidden" name="user_id" [ngModel]="_id">
+                    <div>
+                        <div class="row">
+                            <div class="row form-group col-sm-6">
+                                <label class="col-sm-4">Start Date</label>
+                                <div class="col-sm-8">
+                                    <input class="form-control" placeholder="Select a date" ngx-mydatepicker
+                                           name="start_date_modal"
+                                           (click)="dp.toggleCalendar()"
+                                           [ngModel]="sItem.start_date_modal" [options]="myOptions"
+                                           #dp="ngx-mydatepicker"
+                                           (dateChanged)="onDateChanged($event)"/>
+                                </div>
+                            </div>
+
+
+                            <div class="row form-group col-sm-6">
+                                <label class="col-sm-4">Start time</label>
+                                <div class="col-sm-8">
+                                    <ba-time-picker name="start_time" [ngModel]="sItem.start_time"></ba-time-picker>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="row form-group col-sm-6">
+                                <label class="col-sm-4">Providers</label>
+                                <div class="col-sm-8">
+                                    <select name="user_id" class="form-control" [ngModel]="sItem.user_id">
+                                        <option value="">Select</option>
+                                        <option *ngFor="let item of staffList" [value]="item.id">{{item.user.name}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row form-group col-sm-6">
+
+                                <label class="col-sm-4">Capacity</label>
+                                <div class="col-sm-8">
+                                    <input type="number" name="event_capacity" class="form-control"
+                                           [ngModel]="sItem.event_capacity">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="row form-group col-sm-6">
+                            <h5 class="col-sm-4">Frequency</h5>
+
+
+                            <div class="col-sm-8">
+                                <tabset type="pills">
+                                    <tab heading='Daily' (select)="isDaily=true">
+                                        <div class="row form-group">
+                                            <label class="col-sm-4">Every</label>
+
+                                            <select name="event_frequency" class="form-control"
+                                                    [ngModel]="sItem.event_frequency">
+                                                <option>1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                                <option>4</option>
+                                            </select>
+
+                                        </div>
+                                    </tab>
+                                    <tab heading='Weekly' (select)="isDaily=false">
+                                        <div class="row col-sm-8">
+
+                                            <div *ngFor="let item of weeklyCheckList;let i = index;">
+                                                <div class="form-check">
+
+                                                    <label class="form-check-label">
+                                                        <input type="checkbox" class="form-check-input"
+                                                               name="models{{i}}"
+                                                               [checked]="item.checked"
+                                                               [(ngModel)]="item.checked">
+                                                        {{item.week_day_id|baWeekName}}
+                                                    </label>
+
+                                                </div>
+
+
+                                            </div>
+
+                                        </div>
+                                    </tab>
+                                </tabset>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="row form-group col-sm-6">
+                            <h4 class="col-sm-4">Ends</h4>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="row">
+                            <div class="row form-group col-sm-6">
+                                <label class="col-sm-4">Ends after <input type="radio" name="endType" value="true"
+                                                                          [(ngModel)]="isEndCount">
+                                </label>
+                                <div class="col-sm-8">
+                                    <select name="event_occurrence" class="form-control"
+                                            [ngModel]="sItem.event_occurrence">
+                                        <option value="">select</option>
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row form-group col-sm-6">
+                                <label class="col-sm-4">End Date <input type="radio" name="endType" value="false"
+                                                                        [(ngModel)]="isEndCount"></label>
+                                <div class="col-sm-8">
+                                    <input class="form-control" placeholder="Select a date" ngx-mydatepicker
+                                           name="schedule_end_at_modal"
+                                           (click)="dp2.toggleCalendar()"
+                                           [ngModel]="sItem.schedule_end_at_modal" [options]="myOptions"
+                                           #dp2="ngx-mydatepicker"
+                                           (dateChanged)="onDateChanged($event)"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                  <button class="btn btn-secondary confirm-btn" type="button" (click)="screateModel.hide()" type="button">Close</button>
+                  <button class="btn btn-primary" type="submit">Save</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>

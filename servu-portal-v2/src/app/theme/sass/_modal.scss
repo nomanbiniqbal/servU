@@ -1,0 +1,33 @@
+@import "conf/conf";
+
+.modal {
+  .modal-content {
+    color: $dropdown-text;
+
+    .modal-header {
+      border: none;
+    }
+
+    .modal-footer {
+      border: none;
+    }
+
+    .close {
+      outline: none;
+    }
+  }
+}
+.del-btn-padding
+{
+  margin-right: 105px;
+
+}
+.modal-buttons .btn {
+  margin-right: 20px;
+}
+
+@media (min-width: 992px) {
+  .modal-xlg {
+    max-width: 1200px;
+  }
+}

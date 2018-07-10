@@ -1,0 +1,22 @@
+<div *ngIf="list">
+    <div class="search-field">
+        <input type="text" class="form-control" [(ngModel)]="s" (keyup)="search(s)" placeholder="Search">
+    </div>
+</div>
+
+<div class="with-scroll">
+    <ul class="list-group">
+        <div *ngFor="let c of list" class="my-list-item"
+             (click)="_onSelect(c)"
+             [ngClass]="{Activlist:c.id==selected.id}">
+            <i class="fa fa-angle-right fa-fw" aria-hidden="true"></i>{{c.name}}
+        </div>
+    </ul>
+
+
+    <div *ngIf="!list" class="text-center col-sm-12 margin-15">
+        <span *ngIf="!loading">This list is empty and to create new costomer please click on <i
+                class="fa fa-plus-circle-o"></i></span>
+        <span *ngIf="loading"><i class="fa fa-spin fa-spinner"></i></span>
+    </div>
+</div>

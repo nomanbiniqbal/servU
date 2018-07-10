@@ -1,0 +1,10 @@
+<div *ngIf="fc && fc.control.touched">
+    <div *ngFor="let e of keys(fc.control.errors)">
+        <small class="form-text text-muted" [ngSwitch]="e">
+            <span *ngSwitchCase="'required'">This field is required.</span>
+            <span *ngSwitchCase="'beforeError'">This field should before {{fc.control.errors[e].to}}</span>
+            <span *ngSwitchCase="'afterError'">This field should after {{fc.control.errors[e].to}}</span>
+            <span *ngSwitchCase="'stripCard'">Card number is not valid</span>
+        </small>
+    </div>
+</div>

@@ -1,0 +1,44 @@
+<ba-card title="Customer" baCardClass="medium-card with-scroll" cardType="card-action"
+         (onAction)="createModel.show()"
+         baCardActionClass="fa fa-plus-circle">
+
+    <div *ngIf="!customers.length" class="text-center">
+        <div *ngIf="loading">
+            <i class="fa fa-spinner fa-spin"></i>
+        </div>
+        <div *ngIf="!loading">
+            it seams theres no you need to add
+        </div>
+    </div>
+
+    <ul class="list-group" *ngIf="customers.length">
+        <li class="list-group-item" *ngFor="let item of customers">{{item.business_user.user.name}}
+            <button class="btn btn-danger">remove</button>
+        </li>
+    </ul>
+
+</ba-card>
+
+<div class="modal fade" bsModal #createModel="bs-modal"
+     tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+
+            <div class="modal-header">
+                <h4 class="modal-title pull-left">Schedule Class</h4>
+                <button type="button" class="close pull-right" aria-label="Close" (click)="createModel.hide()">
+                  <i class="ion-close" aria-hidden="true"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <ul>
+                    <li *ngFor="let item of allCustomers">
+                        {{item|json}}
+                        <button type="button" class="btn btn-primary" (click)="addParticipant(item)"> add</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

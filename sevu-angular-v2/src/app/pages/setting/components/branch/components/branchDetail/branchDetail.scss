@@ -1,0 +1,125 @@
+@import "../../../../../../theme/sass/conf/conf";
+
+.branch-detail {
+  height: calc(100% - 60px);
+  .with-scroll {
+    height: 240px;
+    overflow-y: auto;
+  }
+
+  .divider-right {
+    border-right: 1px solid $divider_color;
+    height: 360px;
+  }
+
+  .providerSection {
+    height: calc(100% - 60px);
+    .divider-right {
+      border-right: 1px solid $primary;
+      height: 100%;
+    }
+
+  }
+  .start-end {
+    line-height: 37px;
+    vertical-align: middle;
+    font-weight: bold;
+    vertical-align: middle;
+  }
+
+  .time-schedule {
+    line-height: 37px;
+    vertical-align: middle;
+
+  }
+  .heading-style {
+
+    line-height: 25px;
+    font-weight: bold;
+
+  }
+
+  .bg-week {
+    background-color: #f0f3f4;
+  }
+  .bg-time {
+    background-color: #ffffff;
+
+  }
+
+  .bg-time:hover {
+    background-color: #f0f3f4;
+    font-weight: bold;
+  }
+
+  .week-days {
+    line-height: 35px;
+    background-color: #f0f3f4;
+    font-weight: bold;
+    text-align: center;
+    width: 35px;
+
+  }
+
+  .hr {
+
+    border: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    margin-top: 0.1em;
+    margin-bottom: 0.1em;
+
+
+  }
+  .listitem {
+
+    background-color: #ffffff;
+    line-height: 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  /* .listitem:hover {
+     background-color: #4db8f8;
+     cursor: pointer;
+     color: #ffffff;
+   }*/
+  .schedule-div {
+
+    /* position: absolute;
+     bottom: 0;
+     width: 670px;
+     padding: 0 10px 0 5px;*/
+    width: 680px;
+    padding-top: calc(15% - 10px);
+    .divider-right {
+      border-right: 1px solid $primary;
+      height: 100%;
+    }
+
+    .padding-left {
+      padding-left: 2px;
+
+    }
+    .bd-col {
+      font-size: medium;
+      line-height: 35px;
+
+      /*height:100%;*/
+      border: 0px inset;
+      float: left;
+      width: 14.2%
+
+    }
+
+  }
+  .schedule-padding {
+    padding-bottom: 5px;
+
+  }
+  .assigned {
+    color: red;
+  }
+  .provider-list-item {
+    padding: 10px;
+  }
+
+}

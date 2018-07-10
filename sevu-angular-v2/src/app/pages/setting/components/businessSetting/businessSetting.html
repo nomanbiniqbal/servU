@@ -1,0 +1,345 @@
+<ba-card baCardClass="medium-card">
+  <div class="text-center" *ngIf="loading">
+    <i class="fa fa-spinner fa-spin"></i>
+  </div>
+    <form class="container" #f="ngForm" (ngSubmit)="update(f.value)" >
+
+        <div class="row">
+
+            <div class="col-6">
+                <div class="form-group row" baFieldFocusValidation [input]="name">
+                    <label class="col-3 col-form-label">Name</label>
+                    <div class="col-9">
+                        <input type="text" class="form-control" required name="name" placeholder="Name" ngModel
+                               #name="ngModel">
+                        <ba-validation-message [input]="name"></ba-validation-message>
+                    </div>
+                </div>
+
+
+                <div class="form-group row">
+                    <label class="col-3 col-form-label">Secondry Address</label>
+                    <div class="col-9">
+                        <input type="text" class="form-control" name="address2" placeholder="Line 2" ngModel>
+                    </div>
+                </div>
+
+
+                <div class="form-group row">
+                    <label class="col-3 col-form-label">Working Duration</label>
+                    <div class="col-9">
+                        <input type="number" class="form-control" name="working_duration" ngModel
+                               placeholder="some number">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-3 col-form-label">Country</label>
+                    <div class="col-9">
+                        <ba-select2 [options]="items" placeholder="Please Select Country" name="country_id"
+                                    modalFieldName="id" fieldName="nicename" ngModel #country="ngModel"></ba-select2>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-3 col-form-label">Zone</label>
+                    <div class="col-9">
+                        <select class="form-control" name="zone_id" ngModel>
+                            <option>Select One</option>
+                            <option *ngFor="let item of zones" [value]="item.id">
+                                {{item.zone_name}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-3 col-form-label">Closing Time</label>
+                    <div class="col-9">
+                        <ba-time-picker name="close_at" ngModel></ba-time-picker>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+            <div class="col-6">
+
+                <div class="form-group row">
+                    <label class="col-3 col-form-label">Permanent Address</label>
+                    <div class="col-9">
+                        <input type="text" class="form-control" name="address" placeholder="Line 1" ngModel>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-3 col-form-label">Webstite</label>
+                    <div class="col-9">
+                        <input type="text" class="form-control" name="website" placeholder="website" ngModel>
+                    </div>
+                </div>
+
+
+                <div class="form-group row">
+                    <label class="col-3 col-form-label">City</label>
+                    <div class="col-9">
+                        <input type="text" class="form-control" name="city_id" ngModel placeholder="NOt Implemented">
+                    </div>
+                </div>
+
+
+                <div class="form-group row">
+                    <label class="col-3 col-form-label">Currency</label>
+                    <div class="col-9">
+                        <input type="text" class="form-control" name="currency_id" placeholder="Not Implemented">
+                    </div>
+                </div>
+
+
+                <div class="form-group row">
+                    <label class="col-3 col-form-label">Opening Time</label>
+                    <div class="col-9">
+                        <ba-time-picker name="open_at" ngModel></ba-time-picker>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-3 col-form-label">Active</label>
+                    <div class="col-9">
+                        <ui-switch name="is_active" ngModel size="small"></ui-switch>
+
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+        <!--size="small"-->
+        <div class="pull-right">
+            <button class="btn btn-primary">Update Changes</button>
+        </div>
+    </form>
+</ba-card>
+<div class="row">
+
+
+  <ba-card Class="col-sm-6" title="Payment Method" (onAction)="addPaymentMethod()"
+           cardType="card-action" baCardClass="card-height-manual" baCardActionClass="fa fa-plus-circle pull-right ">
+    <div class="form-group">
+      <div class="row">
+        <div class="col-sm-8">
+          <span style="padding-left: 30px">Payment Type</span>
+        </div>
+        <div class="col-sm-4">
+          <span style="padding-right: 70px">Action</span>
+        </div>
+
+      </div>
+      <hr>
+      <!--<label class="col-sm-6">Payment Method</label>-->
+      <!--<hr>-->
+      <div class="text-center" *ngIf="loading">
+        <i class="fa fa-spinner fa-spin"></i>
+      </div>
+      <div class="col-sm-12" *ngFor="let subItem of business_payment_method_list">
+        <div class="row">
+        <div class="col-sm-8">
+        <label class="col-sm-4">{{subItem.payment_method.name}}</label>
+        </div>
+        <div class="col-sm-2">
+          <i class="fa fa-trash" name="id" (click)="deleteBusinessPaymentMethod(subItem)"></i>
+        </div>
+        </div>
+      </div>
+    </div>
+  </ba-card>
+
+  <ba-card Class="col-sm-6" title="Payment Gateway Method" baCardClass="card-height-manual" (onAction)="addPaymentGateway()"
+           cardType="card-action" baCardActionClass="fa fa-plus-circle pull-right ">
+    <div class="form-group">
+      <!--<label class="col-sm-6">Payment Gateway Method</label>-->
+      <!--<hr>-->
+      <div class="row">
+        <div class="col-sm-8">
+          <span style="padding-left: 30px">Payment Gateway</span>
+        </div>
+        <div class="col-sm-4">
+          <span style="padding-right: 70px">Action</span>
+        </div>
+
+      </div>
+
+      <hr>
+
+      <div class="text-center" *ngIf="loading">
+        <i class="fa fa-spinner fa-spin"></i>
+      </div>
+      <div class="col-sm-12" *ngFor="let subItem of business_payment_gateway_list">
+
+        <div class="row">
+          <div class="col-sm-8">
+            <label class="col-sm-4">{{subItem.payment_gateway.gateway_name}}</label>
+          </div>
+          <div class="col-sm-2">
+            <i class="fa fa-trash" name="id" (click)="deleteBusinessPaymentGateway(subItem)"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ba-card>
+  <!--<ba-card Class="col-sm-6" title="Payment Gateway" baCardClass="medium-card" (onAction)="addPaymentGateway()"-->
+           <!--cardType="card-action" baCardClass="card-padding-manual" baCardActionClass="fa fa-plus-circle pull-right ">-->
+    <!--<div class="form-group row">-->
+      <!--<label class="col-sm-5 col-form-label">Payment Gatway</label>-->
+      <!--<div class="col-sm-5">-->
+        <!--<label class="col-sm-10 col-form-label">{{payment_method}}</label>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</ba-card>-->
+
+</div>
+<div bsModal #paymentmodal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <form #f1="ngForm" (ngSubmit)="submitPaymentMethod(f1.value)" autocomplete="off">
+
+        <div class="modal-header">
+          <button class="close" type="button" (click)="paymentmodal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title">Add Payment Method</h4>
+        </div>
+        <div class="modal-body">
+          <!--Hidden-->
+          <!--<input type="hidden" name="user_id" [ngModel]="ec.id" #id="ngModel">-->
+
+          <div class="form-group row" >
+            <label class="col-sm-2 control-label">Select Payment Method</label>
+            <div class="col-sm-8">
+              <select  class="form-control" name="payment_method_id" ngModel>
+                <option  *ngFor="let subItem of payment_method_list" [value]="subItem.id" >{{subItem.name}}</option>
+              </select>
+            </div>
+          </div>
+
+          </div>
+
+        <div class="modal-footer">
+          <div class="text-center" *ngIf="loading">
+            <i class="fa fa-spinner fa-spin"></i>
+          </div>
+          <button class="btn btn-secondary confirm-btn" type="button" (click)="paymentmodal.hide()">Close</button>
+          <button class="btn btn-primary confirm-btn" [disabled]="f1.invalid" type="submit">Add
+          </button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+</div>
+<div bsModal #paymentgatewaymodal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form #f2="ngForm" (ngSubmit)="submitPaymentGateway(f2.value)" autocomplete="off">
+
+        <div class="modal-header">
+          <button class="close" type="button" (click)="paymentgatewaymodal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title">Add Payment Method</h4>
+        </div>
+        <div class="modal-body">
+          <!--Hidden-->
+          <!--<input type="hidden" name="user_id" [ngModel]="ec.id" #id="ngModel">-->
+
+          <div class="form-group row" >
+            <label class="col-4 col-form-label">Select Payment Method</label>
+            <div class="col-8">
+              <select  class="form-control" name="payment_gateway_id" ngModel #gid="ngModel">
+                <option  *ngFor="let subItem of payment_gateway_list" [value]="subItem.id" >{{subItem.gateway_name}}</option>
+              </select>
+            </div>
+          </div>
+          <div [ngSwitch]="gid.value" ngModelGroup="configurations">
+            <div *ngSwitchCase="'1'">
+              <div class="form-group row" baFieldFocusValidation [input]="stripe_key">
+                <label class="col-4 col-form-label">Stripe Key</label>
+                <div class="col-8">
+                  <input type="text" class="form-control" required name="stripe_key" ngModel
+                         #stripe_key="ngModel">
+                  <ba-validation-message [input]="stripe_key"></ba-validation-message>
+                </div>
+              </div>
+            </div>
+            <div *ngSwitchCase="'braintree'">
+              <div class="form-group row" baFieldFocusValidation [input]="braintree_key">
+              <label class="col-4 col-form-label">Braintree Key</label>
+              <div class="col-8">
+                <input type="text" class="form-control" required name="braintree_key" ngModel
+                       #braintree_key="ngModel">
+                <ba-validation-message [input]="braintree_key"></ba-validation-message>
+              </div>
+            </div>
+              <div class="form-group row" baFieldFocusValidation [input]="braintree_secret">
+                <label class="col-4 col-form-label">Braintree Secret</label>
+                <div class="col-8">
+                  <input type="text" class="form-control" required name="braintree_secret"  ngModel
+                         #braintree_secret="ngModel">
+                  <ba-validation-message [input]="braintree_secret"></ba-validation-message>
+                </div>
+              </div></div>
+            <div *ngSwitchCase="'bpoint'">
+              BPOINT
+            </div>
+            <div *ngSwitchCase="'paypal'">
+              PAYPAL
+            </div>
+            <div *ngSwitchCase="'authorize.net'">
+              AUTHORIZE.NET
+            </div>
+          </div>
+
+          <!--<div id="braintree" aria-hidden="true">-->
+            <!--<label>braintree</label>-->
+          <!--</div>-->
+
+          <!--<div id="stripe" aria-hidden="true">-->
+            <!--<label>stripe</label>-->
+          <!--</div>-->
+
+          <!--<div id="bpoint" aria-hidden="true">-->
+            <!--<label>bpoint</label>-->
+          <!--</div>-->
+
+          <!--<div id="paypal" aria-hidden="true">-->
+            <!--<label>paypal</label>-->
+          <!--</div>-->
+
+          <!--<div id="authorize.net" aria-hidden="true">-->
+            <!--<label>authorize.net</label>-->
+          <!--</div>-->
+
+
+
+          </div>
+
+        <div class="modal-footer">
+          <div class="text-center" *ngIf="loading">
+            <i class="fa fa-spinner fa-spin"></i>
+          </div>
+          <button class="btn btn-secondary confirm-btn" type="button" (click)="paymentgatewaymodal.hide()">Close</button>
+          <button class="btn btn-primary confirm-btn" [disabled]="f2.invalid" type="submit">Add
+          </button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+</div>

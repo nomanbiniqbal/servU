@@ -1,0 +1,169 @@
+<div bsModal #eventPaymentModal="bs-modal" class="modal fade"
+     role="dialog"
+     aria-labelledby="eventPaymentModal"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <form #f="ngForm" (ngSubmit)="submit(f.value)">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Payment Process</h4>
+
+                    <button class="close" type="button" (click)="eventPaymentModal.hide()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-6 divider-right-fix">
+                            <div class="header">
+                                MemberShips
+                                <hr>
+                            </div>
+                            <div *ngIf="membershipList.length<0">
+                                <div *ngIf="loading">
+                                    <i class="fa fa-spinner fa-spin"></i>
+                                </div>
+                                <div *ngIf="!loading">
+                                    <span>No Membership is available</span>
+                                </div>
+                            </div>
+                            <div class="with-scroll-set">
+                                <div *ngIf="membershipList.length>0">
+                                    <div *ngFor="let m of membershipList" class="membership-list-item with-scroll">
+                                        <div class="title">Membership Name</div>
+                                        <div class="row " *ngFor="let p of m.products">
+                                            <div class="form-check form-check-inline col-12">
+                                                <label class="form-check-label">
+                                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1"
+                                                           value="option1"> {{p.name}}
+                                                </label>
+                                                <div class="hr"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-6">
+
+                            <div class="row form-group">
+
+                                <div class="col-6">
+                                    NAME OF PRODUCT
+                                </div>
+                                <div class="col-3 text-center">
+                                    PRICE
+                                </div>
+
+                            </div>
+                            <hr>
+                            <div class="product-scroll">
+                                <div class="row product-item" *ngFor="let p of event.event_product">
+                                    <div class="col-6">
+                                        {{p.business_product.name}}
+                                    </div>
+
+                                    <div class="col-3 text-center">
+                                        {{p.cost}}
+                                    </div>
+                                    <div class="hr"></div>
+                                </div>
+                                <br>
+                                <div class="hr"></div>
+                                <div class="row">
+                                    <div class="col-6 align-content-lg-center">
+                                        <strong>Total</strong>
+                                    </div>
+                                    <div class="col-3 text-center">
+                                        {{totalCost}}
+                                    </div>
+                                    <div class="col-3 text-center">
+                                        <input class="form-control" name="discount">
+                                    </div>
+                                </div>
+                                <div class="hr"></div>
+                            </div>
+                            <br>
+                            <tabset type="pills" [vertical]="true" [justified]="true">
+                                <tab *ngFor="let m of methods" [heading]="m.payment_method.name" (select)="methodID=m.payment_method_id">
+                                    <div [ngSwitch]="m.payment_method.id" class="form-horizontal">
+                                        <div *ngSwitchCase="1">
+                                            <div class="form-group row">
+                                                <div class="col-3">
+                                                    <label>Cash</label>
+                                                </div>
+                                                <div class="col-9">
+                                                    <input type="text" class="form-control">
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div *ngSwitchCase="2">
+                                            <div *ngIf="strip.isInit">
+                                                <div class="form-group row">
+                                                    <label class="col-3">Number</label>
+
+                                                    <div class="col-9">
+                                                        <input type="number" name="card" class="form-control"
+                                                               ngModel
+                                                               #cardnumber="ngModel"
+                                                               baStripCardValidator
+                                                               placeholder="xxxx-xxxx-xxxx-xxxx">
+                                                        <ba-validation-message
+                                                                [input]="cardnumber"></ba-validation-message>
+                                                    </div>
+
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-3">CVC</label>
+                                                    <div class="col-9">
+                                                        <input type="number" name="cvc" class="form-control"
+                                                               placeholder="xxx"
+                                                               ngModel
+                                                               #cvc="ngModel"
+                                                               baStripCVCValidator>
+                                                        <ba-validation-message [input]="cvc"></ba-validation-message>
+
+                                                    </div>
+
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-3">Exp</label>
+                                                    <div class="col-4">
+                                                        <input type="number" name="exp_month" class="form-control"
+                                                               ngModel
+                                                               placeholder="MM">
+                                                    </div>
+                                                    <label class="col-1">-</label>
+                                                    <div class="col-4">
+                                                        <input type="number" name="exp_year" class="form-control"
+                                                               ngModel
+                                                               placeholder="YYYY">
+                                                    </div>
+                                                    <div class="col-12" *ngIf="expireInvalid">
+                                                        {{expireInvalid}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div *ngIf="!strip.isInit">
+                                                Please check strip configs
+                                            </div>
+                                        </div>
+                                    </div>
+                                </tab>
+                            </tabset>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-primary">Process</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+</div>

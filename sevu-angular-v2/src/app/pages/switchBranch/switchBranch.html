@@ -1,0 +1,40 @@
+<div>
+    <div class="auth-main animated bounceIn">
+        <ba-card class=" col-sm-5  text-center " style="margin-left: 29%">
+            <h1 class="text-center">Switch Branch</h1>
+            <a routerLink="/page" class="auth-link">Back to servU</a>
+            <div class="list">
+                <div class="card" *ngFor="let item of list" [ngClass]="{'active':item.business_user[0].is_default}"
+                     (click)="switchMe(item)">
+                    <div class="card-body">
+                        <h4>{{item.branch_name}}</h4>
+                    </div>
+                </div>
+            </div>
+        </ba-card>
+    </div>
+</div>
+
+
+<!-- Small modal -->
+<div bsModal #smModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Confirmation</h4>
+                <button class="close" aria-label="Close" (click)="smModal.hide()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to swith brnach;
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary confirm-btn" (click)="confirmMe();">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<img src="assets/img/app/login_back.jpg" alt="" class="background-img">

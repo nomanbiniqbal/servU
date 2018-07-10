@@ -1,0 +1,20 @@
+<div>
+    <div *ngIf="!show" class="auth-main animated bounceIn">
+        <div class="auth-block">
+            <ba-card class="col-sm-5 text-center">
+                <business-auth [info]="businessInfo" (businessInfo)="onBusinessSubmit($event)"></business-auth>
+            </ba-card>
+        </div>
+
+    </div>
+
+    <div *ngIf="show" class="auth-main animated bounceIn">
+        <div class="auth-block">
+            <business-setup [businessInfo]="businessInfo" (businessSetup)="onBusinessSetup($event)"
+                            (back)="show=false"></business-setup>
+
+        </div>
+    </div>
+</div>
+
+<img src="assets/img/app/login_back.jpg" alt="" class="background-img">

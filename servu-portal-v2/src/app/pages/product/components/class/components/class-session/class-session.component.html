@@ -1,0 +1,33 @@
+<ba-card title="Class Schedule session" baCardClass="medium-card with-scroll">
+
+
+    <div *ngIf="!sessions.length" class="text-center">
+        <div *ngIf="loading">
+            <i class="fa fa-spinner fa-spin"></i>
+        </div>
+    </div>
+
+    <ul class="list-group">
+        <div class="list-item" *ngFor="let item of sessions"
+            (click)="select(item)"
+            [ngClass]="{OnSelected1: item.id==selectedId}">
+          <div class="schedule-session-list">
+            <div class="row col-sm-12" style="padding-left:20px;">
+              <span class="session-user">{{item.event_organizer[0].business_user.user.name}}</span>
+            </div>
+          <div class="row col-sm-12" style="padding-left:20px;">
+            {{item.event_start_at|baDate:'YYYY-MM-DD HH:mm:ss':'DD MMMM, YYYY'}}
+</div>
+          <div class="row col-sm-12" style="padding-left:20px;">
+          {{item.event_start_at|baDate:'YYYY-MM-DD HH:mm:ss':'LT'}} To {{item.event_end_at|baDate:'YYYY-MM-DD HH:mm:ss':'LT'}}
+          </div>
+          <div class="row col-sm-12" style="padding-left:20px;">
+          {{item.event_participant_count}}/{{item.event_capacity}} Spots Available
+          </div>
+
+          </div>
+          <!--<div class="line-hr"></div>-->
+
+        </div>
+    </ul>
+</ba-card>

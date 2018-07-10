@@ -1,0 +1,39 @@
+<div *ngIf="!product.id" style="padding: 100px">
+    <div class="col-sm-12 text-center">
+       <i class="fa fa-fax" style="font-size: 50px"></i><br><br>
+        <h3 *ngIf="!loading">Please Select Any Service</h3>
+      <p class="text-center">If there is no service first add new service</p>
+        <span *ngIf="loading"> <i class="fa fa-spinner fa-spin"></i> </span>
+    </div>
+</div>
+
+<div class="container" *ngIf="product.id">
+    <div class="row">
+        <div class="col-sm-6 card-title">Price</div><hr>
+        <div class="col-sm-6 ">{{product.cost}}$</div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6 card-title">Duration</div>
+        <hr>
+        <div class="col-sm-6">{{product.duration}}</div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6 card-title">Category</div>
+        <hr>
+        <div class="col-sm-6">{{product.category||'Other'}}</div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6 card-title">Tax</div>
+        <hr>
+        <div class="col-sm-6">{{product.tax}}</div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6 card-title">Commision </div><hr>
+      <div class="col-sm-6">{{product.commission}}%</div>
+    </div>
+
+</div>

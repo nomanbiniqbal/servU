@@ -1,0 +1,20 @@
+<div class="row">
+    <ba-card title="Checklist"
+             cardType="card-action"
+             baCardClass="viewport100 with-scroll"
+             baCardActionClass="fa fa-plus-circle"
+             (onAction)="event.createNew()"
+             class="col-sm-6">
+        <app-checkin-list #checkinList (select)="detialPopup.show($event)"></app-checkin-list>
+    </ba-card>
+
+    <ba-card title="Checkout List" class="col-sm-6"
+             baCardClass="viewport100 with-scroll"  droppable [dragOverClass]="'drag-target-border'" (onDrop)="checkinList.checkIn($event.dragData)">
+        <app-checkout-list
+                (select)="$event.checkout_at?paymentPopup.show($event):checkout.checkout($event)"></app-checkout-list>
+    </ba-card>
+</div>
+<app-event-create-popup #event></app-event-create-popup>
+<app-event-checkout-popup #checkout></app-event-checkout-popup>
+<app-payment-popup #paymentPopup></app-payment-popup>
+<app-event-detail-popup #detialPopup></app-event-detail-popup>

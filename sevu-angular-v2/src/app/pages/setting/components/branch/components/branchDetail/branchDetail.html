@@ -1,0 +1,141 @@
+<ba-card [title]="_branch.branch_name" cardType="card-action"
+         [baCardActionClass]="!isEditAble?'fa fa-edit':''"
+         (onAction)="onEdit()" baCardClass="medium-card"
+         baCardClass="viewport100">
+
+  <div class="container" *ngIf="!_branch.id">
+    <div class="col-sm-12 text-center">
+      <h3 *ngIf="!loading">Please select any branch</h3>
+      <span *ngIf="loading"> <i class="fa fa-spinner fa-spin"></i> </span>
+    </div>
+  </div>
+
+  <div class="container" *ngIf="_branch.id">
+
+    <div class="row branch-detail">
+      <div class="col-sm-8 divider-right">
+
+
+        <div class="form-group row">
+          <div class="col-sm-4">
+            <label class="card-title">Address Line 1:</label>
+          </div>
+          <div class="col-sm-8">
+            <label>{{_branch.business_address}}</label>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-sm-4">
+            <label class="card-title">Country:</label>
+          </div>
+          <div class="col-sm-8" *ngIf="countrydata">
+            <label>{{countrydata.nicename}}</label>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-sm-4">
+            <label class="card-title">Time Zone:</label>
+          </div>
+          <div class="col-sm-8">
+            <label>{{_branch.zone_name}}</label>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <div class="col-sm-4">
+            <label class="card-title">Schedules:</label>
+          </div>
+          <div class="col-sm-7">
+            <div class="schedule-padding row" *ngFor="let time of _branch.business_location_schedule">
+              <div class="col-4">
+                {{time.week_day_id|baWeekName:true}}
+              </div>
+              <div class="col-5">
+                <span *ngIf="time.is_open">{{time.open_at|baDate:'HH:mm:ss':'HH:mm'}} - {{time.close_at|baDate:'HH:mm:ss':'HH:mm'}}</span>
+                <span *ngIf="!time.is_open">Closed</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <!--<div class="schedule-div">-->
+        <!--<div class="row">-->
+        <!--<div class="col-sm-1 bg-week">-->
+        <!--<div class="bg-week">&nbsp;</div>-->
+        <!--<br>-->
+        <!--<div class="start-end ">Start:</div>-->
+        <!--<div class="start-end ">End:</div>-->
+        <!--</div>-->
+        <!--<div class="col-sm-8">-->
+        <!--<div class="bd-col text-center" *ngFor="let time of _branch.business_location_schedule">-->
+        <!--<div class="bg-week divider-right">-->
+        <!--<div class="week-days">-->
+        <!--{{time.week_day_id|baWeekName}}-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--<div class="bg-time divider-right">-->
+
+        <!--<span class="padding-left"></span> {{time.open_at|baDate:'HH:mm:ss':'HH:mm'}}-->
+
+        <!--</div>-->
+        <!--<div class="bg-time divider-right">-->
+
+        <!--<span class="padding-left"></span> {{time.close_at|baDate:'HH:mm:ss':'HH:mm'}}-->
+
+        <!--</div>-->
+
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+
+
+      </div>
+
+      <div class="col-sm-4 branch-detail">
+        <div class="row">
+          <div class="col-sm-4">
+            <h3 class="card-title">Providers</h3>
+          </div>
+          <div class="col-sm-4"
+               container="body"
+               placement="bottom"
+               triggers=""
+               popoverTitle="Create provider"
+               popover="Create provider to add in selected branch."
+               #pop="bs-popover" (click)="pop.hide();popup.create(_branch.business_location_schedule)"><i
+            class="fa fa-plus-circle pull-right"></i>
+          </div>
+
+
+        </div>
+        <hr>
+        <span *ngIf="loading" class="text-center"> <i class="fa fa-spinner fa-spin"></i> </span>
+        <div *ngIf="!loading">
+          <div class="with-scroll">
+            <ul class="list-group">
+              <div class="listitem" *ngFor="let p of providers"
+                   (click)="isAssigned(p,_branch.id)?'':popup.editWholeProvider(p,_branch.business_location_schedule)">
+                <div class="provider-list-item">
+                  {{p.name}}
+                  <small *ngIf="isAssigned(p,_branch.id)" class="badge badge-default badge-pill pull-right"><i class="fa fa-check"></i> working
+                  </small>
+
+                </div>
+               <div class="hr"></div>
+              </div>
+
+            </ul>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+
+</ba-card>
+
+<provider-popup #popup></provider-popup>

@@ -1,0 +1,110 @@
+<div>
+    <div class="auth-main animated bounceIn">
+        <ba-card class=" col-sm-8  text-center " style="margin-left: 16%">
+            <h1 class="text-center">Switch Plan</h1>
+            <a routerLink="/page" class="auth-link">Back to servU</a>
+            <form #f="ngForm" (ngSubmit)="switchMe(f.value)">
+                <div class="row">
+                    <div class="col-3 subscription-type" *ngFor="let p of plans">
+                        <section class="payment text-center">
+                            <header>
+                                <h3>{{p.name}}</h3>
+                            </header>
+
+                            <label class="my-label">
+                                <span>${{p.cost}}</span>
+                            </label>
+                            <ul class="text-left">
+                                <li *ngFor="let f of p.features">{{f}}</li>
+                            </ul>
+                            <input type="radio" name="plan"
+                                   ngModel
+                                   required
+                                   [value]="p">
+                        </section>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <button class="btn btn-primary">Proceed Payment</button>
+                    </div>
+                </div>
+            </form>
+        </ba-card>
+    </div>
+</div>
+
+
+<!-- Small modal -->
+<div bsModal #smModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <form #cf="ngForm" (ngSubmit)="confirmMe(cf.value)">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Confirmation</h4>
+                    <button class="close" aria-label="Close" type="button" (click)="smModal.hide()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="form-group row">
+                        <label class="col-3">Number</label>
+
+                        <div class="col-9">
+                            <input type="number" name="card" class="form-control"
+                                   ngModel
+                                   required
+                                   #cardnumber="ngModel"
+                                   baStripCardValidator
+                                   placeholder="xxxx-xxxx-xxxx-xxxx">
+                            <ba-validation-message
+                                    [input]="cardnumber"></ba-validation-message>
+                        </div>
+
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-3">CVC</label>
+                        <div class="col-9">
+                            <input type="number" name="cvc" class="form-control"
+                                   placeholder="xxx"
+                                   ngModel
+                                   required
+                                   #cvc="ngModel"
+                                   baStripCVCValidator>
+                            <ba-validation-message [input]="cvc"></ba-validation-message>
+
+                        </div>
+
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-3">Exp</label>
+                        <div class="col-4">
+                            <input type="number" name="exp_month" class="form-control"
+                                   ngModel
+                                   required
+                                   placeholder="MM">
+                        </div>
+                        <label class="col-1">-</label>
+                        <div class="col-4">
+                            <input type="number" name="exp_year" class="form-control"
+                                   ngModel
+                                   required
+                                   placeholder="YYYY">
+                        </div>
+                        <div class="col-12" *ngIf="expireInvalid">
+                            {{expireInvalid}}
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary confirm-btn">Save changes</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<img src="assets/img/app/login_back.jpg" alt="" class="background-img">

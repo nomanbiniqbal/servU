@@ -1,0 +1,18 @@
+<ba-card title="Class Schedule session" baCardClass="medium-card with-scroll">
+
+
+    <div *ngIf="!sessions.length" class="text-center">
+        <div *ngIf="loading">
+            <i class="fa fa-spinner fa-spin"></i>
+        </div>
+    </div>
+
+    <ul class="list-group">
+        <li class="list-group-item" *ngFor="let item of sessions"
+            (click)="select(item)"
+            [ngClass]="{OnSelected: item.id==selectedId}">
+
+            {{item.event_start_at}}
+        </li>
+    </ul>
+</ba-card>

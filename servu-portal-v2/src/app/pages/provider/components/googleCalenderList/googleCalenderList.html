@@ -1,0 +1,89 @@
+<ba-card (onAction)="onAction()"
+         cardType="card-action"
+         [baCardActionClass]="setup?'fa fa-refresh':'fa fa-plus-circle'"
+         baCardClass="medium-card card-margin with-scroll"
+         title="Google Integration">
+
+    <div *ngIf="loading" class="text-center">
+        <i class="fa fa-spin fa-spinner"></i>
+    </div>
+
+    <div *ngIf="!loading">
+        <div class="text-center" style="padding: 100px" *ngIf="!setup">
+            <i class="fa fa-google" style="font-size: 50px"></i><br><br>
+            <h4 class="text-center">There is no calendar integrated.</h4>
+            <p>Integrate with google calendar</p>
+            <div class="text-center"><span *ngIf="loading"><i class="fa fa-spin fa-spinner"></i> </span></div>
+        </div>
+
+
+        <div *ngIf="setup">
+            <div class="row">
+                <div class="col-sm-10 card-title">{{account.gl_email}}</div>
+                <div class="col-sm-2" (click)="celandarModal.show()"><i class="fa fa-minus"></i></div>
+            </div>
+            <div class="line-hr"></div>
+
+            <div *ngFor="let g of calenderList">
+                <div class="row google-list">
+
+                    <div class="col-sm-7 google-list-int pull-left">
+                        {{g.gl_calender_name}}
+                    </div>
+
+                    <div class="col-sm-1 google-list-checkbox">
+                        <i class="fa fa-spin fa-refresh" *ngIf="g.loading"></i>
+                    </div>
+
+                    <div class="col-sm-2 google-list-checkbox">
+                        <label class="form-check-label">
+                            <input type="checkbox" class="form-check-input" (change)="updateStatus(g)"
+                                   [(ngModel)]="g.write_on_calender">Write
+                        </label>
+                    </div>
+                    <div class="col-sm-2 google-list-checkbox">
+                        <label class="form-check-label">
+                            <input type="checkbox" class="form-check-input" (change)="updateStatus(g)"
+                                   [(ngModel)]="g.read_from_calender">Read
+                        </label>
+                    </div>
+
+                </div>
+                <div class="hr"></div>
+            </div>
+
+        </div>
+    </div>
+
+
+</ba-card>
+
+
+<div bsModal #celandarModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+     aria-labelledby="myLargeModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+
+
+            <div class="modal-header">
+                <h4 class="modal-title">Un-Link</h4>
+                <button class="close pull-right" type="button" (click)="celandarModal.hide()" aria-label="Close">
+                    <i class="ion-close" aria-hidden="true"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to remove
+            </div>
+
+            <div class="modal-footer">
+                <i class="fa fa-spin fa-spinner" *ngIf="removing"></i>
+                <button class="btn btn-secondary confirm-btn" type="button" (click)="celandarModal.hide()">Close
+                </button>
+                <button class="btn btn-danger confirm-btn" type="button" (click)="remove()">Remove</button>
+            </div>
+
+
+        </div>
+    </div>
+</div>

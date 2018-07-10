@@ -1,0 +1,14 @@
+@import "../../../../../../theme/sass/conf/conf";
+
+.detail-container {
+  height: calc(100% - 50px);
+  .divider-right {
+    border-right: 1px solid $primary;
+    height: 100%;
+  }
+}
+
+.bd-col {
+  float: left;
+  width: 14.2%
+}

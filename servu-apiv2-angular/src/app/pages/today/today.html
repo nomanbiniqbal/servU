@@ -1,0 +1,80 @@
+<div class="row">
+  <ba-card class="col-sm-3" baCardClass="viewport100">
+
+    <div class="form-group row">
+      <input class="form-control" placeholder="Select Customer">
+    </div>
+    <div class="row">
+      <div class="pull-right">
+        <button class="btn btn-primary"><i class="fa fa-plus"></i> Add New</button>
+        <button class="btn btn-default">Clear</button>
+      </div>
+    </div>
+    <div class="overview-sep">
+      <span><span>over view</span></span>
+    </div>
+    <div class="row form-group">
+      <div class="col-sm-4">Customer:</div>
+      <div class="col-sm-8">David Warner</div>
+    </div>
+    <div class="row form-group">
+      <div class="col-sm-4">Services:</div>
+      <div class="col-sm-8">David Warner ,David Warner David Warner David Warner, David Warner</div>
+    </div>
+
+    <div class="row form-group">
+      <div class="col-sm-4">Provider:</div>
+      <div class="col-sm-8">abc</div>
+    </div>
+    <div class="row form-group">
+      <div class="col-sm-4">Branch:</div>
+      <div class="col-sm-8">Branchmy</div>
+    </div>
+
+    <div class="row form-group">
+      <div class="col-sm-4">Date:</div>
+      <div class="col-sm-8">wed, 15, Dec 2017</div>
+    </div>
+    <div class="row form-group">
+      <div class="col-sm-4">Time:</div>
+      <div class="col-sm-8">09:00am - 11:30pm</div>
+    </div>
+
+    <div class="row form-group">
+      <div class="col-sm-12"><textarea class="form-control" width="100%" rows="5"
+                                       placeholder="please add some addtional notes"></textarea></div>
+    </div>
+  </ba-card>
+  <ba-card class="col-sm-3" baCardClass="viewport100 with-scroll">
+    <div class="row">
+      <input class="form-control" placeholder="Select Customer">
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <accordion closeOthers="true">
+          <div *ngFor="let item of list">
+            <accordion-group #group *ngIf="item.type=='cat'">
+              <div accordion-heading>
+                {{item.label}}
+                <i class="pull-right float-xs-right glyphicon"
+                   [ngClass]="{'glyphicon-chevron-down': group?.isOpen, 'glyphicon-chevron-right': !group?.isOpen}"></i>
+              </div>
+              <div class="row" *ngFor="let serviceItem of item.services">
+                {{serviceItem.label}}
+              </div>
+            </accordion-group>
+            <div class="row" *ngIf="item.type=='ser'">
+              {{item.label}}
+            </div>
+          </div>
+        </accordion>
+      </div>
+
+
+    </div>
+  </ba-card>
+  <ba-card class="col-sm-6" baCardClass="viewport100 with-scroll">
+    <div class="row">
+    </div>
+  </ba-card>
+</div>

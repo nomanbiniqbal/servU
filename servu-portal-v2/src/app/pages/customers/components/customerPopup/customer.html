@@ -1,0 +1,83 @@
+<div bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form #f="ngForm" (ngSubmit)="customerFormSubmit(f.value)" autocomplete="off">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">Customer</h4>
+                    <button class="close" type="button" (click)="lgModal.hide()" aria-label="Close">
+                      <i class="ion-close" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!--Hidden-->
+                    <input type="hidden" name="user_id" [ngModel]="ec.id" #id="ngModel">
+
+                    <div class="form-group row" baFieldFocusValidation [input]="name">
+                        <label class="col-sm-3 control-label">Name</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" #name="ngModel" required="required"
+                                   placeholder="Name" name="name"
+                                   [ngModel]="ec.name">
+                            <ba-validation-message [input]="name"></ba-validation-message>
+                        </div>
+                    </div>
+
+                    <div class="form-group row" baFieldFocusValidation [input]="email">
+                        <label class="col-sm-3 control-label">Email</label>
+                        <div class="col-sm-9">
+                            <input type="email" class="form-control" #email="ngModel" required placeholder="Email"
+                                   name="email"
+                                   [disabled]="id.value"
+                                   [ngModel]="ec.email" [readonly]="switch">
+                            <ba-validation-message [input]="email"></ba-validation-message>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group row" baFieldFocusValidation [input]="country">
+                        <label class="col-sm-3 control-label">Phone Code</label>
+                        <div class="col-sm-9">
+                            <ba-country-input name="country_code" #country="ngModel" [ngModel]="ec.country_code"
+                                              required phoneOnly="true"></ba-country-input>
+                            <ba-validation-message [input]="country"></ba-validation-message>
+                        </div>
+                    </div>
+
+                    <div class="form-group row" baFieldFocusValidation [input]="telephone">
+                        <label class="col-sm-3 control-label">Telephone</label>
+                        <div class="col-sm-9">
+                            <input type="text" [textMask]="{mask: mask}" #telephone="ngModel" class="form-control"
+                                    name="telephone" [ngModel]="ec.telephone">
+                            <ba-validation-message [input]="telephone"></ba-validation-message>
+                        </div>
+                    </div>
+
+                    <div class="form-group row" baFieldFocusValidation [input]="address">
+                        <label class="col-sm-3 control-label">Address</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" #address="ngModel"  placeholder="Address"
+                                   name="address"
+                                   [ngModel]="ec.address">
+                            <ba-validation-message [input]="address"></ba-validation-message>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <i *ngIf="progressbar" class="fa fa-refresh fa-spin fa-3x fa-fw"></i>
+                    <button class="btn btn-secondary confirm-btn" type="button" (click)="lgModal.hide()">Close</button>
+                    <button class="btn btn-primary confirm-btn" [disabled]="f.invalid" type="submit">Save changes
+                    </button>
+                    <button *ngIf="id.value" class="btn btn-danger confirm-btn float-left" type="button"
+                            (click)="delete_customer(id.value)">Delete
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>

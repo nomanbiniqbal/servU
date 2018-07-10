@@ -1,0 +1,342 @@
+<div bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog  modal-xlg">
+        <div class="modal-content">
+
+            <form #providerf="ngForm" (ngSubmit)="formSubmit(es)" autocomplete="off">
+
+
+                <div class="modal-body">
+                    <!--Hidden-->
+                    <input type="hidden" name="user_id" [ngModel]="es.user_id" #id="ngModel">
+
+                    <!--Modal group-->
+                    <div class="col-sm-12">
+
+                        <div class="row">
+
+                            <div class="col-sm-4 divider-right">
+                                <div class="header">
+                                    <h4 *ngIf="id.value" class="card-title">Provider Edit</h4>
+                                  <h4 *ngIf="!id.value" class="card-title">Provider Add</h4>
+                                    <hr>
+                                </div>
+
+                                <div class="form-group row" baFieldFocusValidation [input]="name">
+                                    <label class="col-sm-3 control-label">Name</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" #name="ngModel" required
+                                               placeholder="Name" name="name"
+                                               [(ngModel)]="es.name">
+                                        <ba-validation-message [input]="name"></ba-validation-message>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row" baFieldFocusValidation [input]="email">
+                                    <label class="col-sm-3 control-label">Email</label>
+                                    <div class="col-sm-9">
+                                        <input type="email" class="form-control" #email="ngModel" required
+                                               placeholder="Email" name="email"
+                                               [(ngModel)]="es.email">
+                                        <ba-validation-message [input]="email"></ba-validation-message>
+
+                                    </div>
+                                </div>
+                                <div class="form-group row" baFieldFocusValidation [input]="password">
+                                    <label class="col-sm-3 control-label">Password</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" #password="ngModel" required
+                                               placeholder="password" name="password"
+                                               [(ngModel)]="es.password">
+                                        <ba-validation-message [input]="password"></ba-validation-message>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group row" baFieldFocusValidation [input]="telephone">
+                                    <label class="col-sm-3 control-label">Telephone</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" [textMask]="{mask: mask}" class="form-control"
+                                               #telephone="ngModel" required name="phone_number"
+                                               [(ngModel)]="es.phone_number">
+                                        <ba-validation-message [input]="telephone"></ba-validation-message>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group row" baFieldFocusValidation [input]="phoneCountryCode">
+                                    <label class="col-sm-3 control-label">Phone Country Code</label>
+                                    <div class="col-sm-9">
+
+                                        <ba-select2 #phoneCountryCode="ngModel" required [options]="countries"
+                                                    fieldName="nicename,phonecode" modalFieldName="phonecode"
+                                                    name="phone_country_code"
+                                                    placeholder="Please Select CCo"
+                                                    [(ngModel)]="es.phone_country_code"></ba-select2>
+
+
+                                        <ba-validation-message [input]="phoneCountryCode"></ba-validation-message>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group row" baFieldFocusValidation [input]="address">
+                                    <label class="col-sm-3 control-label">Address</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" #address="ngModel" required
+                                               placeholder="Address"
+                                               name="address"
+                                               [(ngModel)]="es.address">
+                                        <ba-validation-message [input]="address"></ba-validation-message>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4 divider-right">
+                                <div class="header">
+                                    <h4 class="card-title">Schedules</h4>
+                                    <hr>
+                                </div>
+                                <div class="container">
+                                    <div class="row form-group">
+                                        <div class="col-3 offset-sm-2 text-center">
+                                            <h4>Start</h4>
+                                        </div>
+                                        <div class="col-3 text-center">
+                                            <h4>End</h4>
+                                        </div>
+                                    </div>
+
+                                    <div class="row form-group" *ngFor="let item of es.user_schedule;let i=index;">
+                                        <div class="row" [ngModelGroup]="i">
+                                            <div class="col-2">
+                                                {{item.week_day_id|baWeekName}}
+                                            </div>
+                                            <div class="col-3">
+                                                <ba-time-picker extraClass="form-control-sm" [(ngModel)]="item.open_at"
+                                                                name="open_at"></ba-time-picker>
+                                            </div>
+
+                                            <div class="col-3">
+                                                <ba-time-picker [(ngModel)]="item.close_at"
+                                                                extraClass="form-control-sm"
+                                                                name="close_at"></ba-time-picker>
+                                            </div>
+
+                                            <div class="col-2">
+                                                <ui-switch size="small" [(ngModel)]="item.is_open"
+                                                           name="is_open"></ui-switch>
+                                            </div>
+                                            <div class="col-2 no-padding-left">
+                                                <button type="button" class="btn btn-primary btn-sm"
+                                                        [ngClass]="{selectedB: breaks==item}"
+                                                        (click)="breaks=item">break
+                                                </button>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <h4 class="card-title">Breaks</h4>
+                                <button class="close" type="button" (click)="lgModal.hide()"
+                                        aria-label="Close">
+                                  <i class="ion-close" aria-hidden="true"></i>
+                                </button>
+                                <hr>
+
+                                <div *ngIf="!breaks">
+                                    <h4 class="text-center">Please Select Break</h4>
+
+                                </div>
+                                <div *ngIf="breaks">
+                                    <div class="">
+                                        <h5 class="card-title">{{breaks.week_day_id|baWeekName}}: Breaks <i
+                                                class="fa fa-plus-circle"
+
+                                                (click)="breaks.user_schedule_break.push({})">
+                                        </i></h5>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <label>Start</label>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <label>End</label>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <label>Remove</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row" *ngFor="let b of breaks.user_schedule_break;let i = index;" [ngModelGroup]="i">
+
+
+
+                                        <div class="col-sm-4">
+
+                                            <ba-time-picker extraClass="form-control-sm" [(ngModel)]="b.break_start"
+                                                            name="break_start"></ba-time-picker>
+                                        </div>
+
+                                        <div class="col-sm-4">
+
+                                            <ba-time-picker extraClass="form-control-sm" [(ngModel)]="b.break_end"
+                                                            name="break_end"></ba-time-picker>
+                                        </div>
+                                        <div class="col-sm-4">
+
+                                            <i class="fa fa-trash text-center"
+                                               (click)="breaks.user_schedule_break.splice(i,1)" tooltip="Remove"></i>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <h5 *ngFor="let e of errors">{{e}}</h5>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-default" type="button" (click)="lgModal.hide()">Close</button>
+                    <button *ngIf="!id.value" class="btn btn-primary confirm-btn" [disabled]="f.invalid" type="submit">Save Changes
+                    </button>
+                  <button *ngIf="id.value" class="btn btn-primary confirm-btn" [disabled]="f.invalid" type="submit">Update Changes
+                  </button>
+                    <i *ngIf="progress"  class="fa fa-refresh fa-spin fa-2x fa-fw" aria-hidden="true"></i>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+</div>
+<div bsModal #providerEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog  modal-small">
+        <div class="modal-content">
+
+            <form #f="ngForm" (ngSubmit)="formSubmit(f.value)" autocomplete="off">
+
+
+                <div class="modal-body">
+                    <!--Hidden-->
+                    <input type="hidden" name="user_id" [ngModel]="es.id" #user_id="ngModel">
+                    <input type="hidden" name="id" [ngModel]="es.id" #id="ngModel">
+                    <input type="hidden" name="business_user" [ngModel]="es.business_user" #business_user="ngModel">
+
+                    <!--Modal group-->
+                    <div class="col-sm-12">
+
+                        <div class="row">
+
+                            <div class="col-sm-10">
+                                <div class="header">
+                                    <h4 *ngIf="id.value" class="card-title">Provider Edit</h4>
+                                    <hr>
+                                </div>
+
+                                <div class="form-group row" baFieldFocusValidation [input]="name">
+                                    <label class="col-sm-3 control-label">Name</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" #name="ngModel" required
+                                               placeholder="Name" name="name"
+                                               [(ngModel)]="es.name">
+                                        <ba-validation-message [input]="name"></ba-validation-message>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row" baFieldFocusValidation [input]="email">
+                                    <label class="col-sm-3 control-label">Email</label>
+                                    <div class="col-sm-9">
+                                        <input type="email" class="form-control" #email="ngModel" required
+                                               placeholder="Email" name="email"
+                                               [(ngModel)]="es.email">
+                                        <ba-validation-message [input]="email"></ba-validation-message>
+
+                                    </div>
+                                </div>
+                                <div class="form-group row" baFieldFocusValidation [input]="password">
+                                    <label class="col-sm-3 control-label">Password</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" #password="ngModel" required
+                                               placeholder="password" name="password"
+                                               [(ngModel)]="es.password">
+                                        <ba-validation-message [input]="password"></ba-validation-message>
+
+                                    </div>
+                                </div>
+
+                                <!--<div class="form-group row" baFieldFocusValidation [input]="telephone">-->
+                                    <!--<label class="col-sm-3 control-label">Telephone</label>-->
+                                    <!--<div class="col-sm-9">-->
+                                        <!--<input type="text" [textMask]="{mask: mask}" class="form-control"-->
+                                               <!--#telephone="ngModel" required name="phone_number"-->
+                                               <!--[(ngModel)]="es.phone_number">-->
+                                        <!--<ba-validation-message [input]="telephone"></ba-validation-message>-->
+
+                                    <!--</div>-->
+                                <!--</div>-->
+
+                                <!--<div class="form-group row" baFieldFocusValidation [input]="phoneCountryCode">-->
+                                    <!--<label class="col-sm-3 control-label">Phone Country Code</label>-->
+                                    <!--<div class="col-sm-9">-->
+
+                                        <!--<ba-select2 #phoneCountryCode="ngModel" required [options]="countries"-->
+                                                    <!--fieldName="nicename,phonecode" modalFieldName="phonecode"-->
+                                                    <!--name="phone_country_code"-->
+                                                    <!--placeholder="Please Select CCo"-->
+                                                    <!--[(ngModel)]="es.phone_country_code"></ba-select2>-->
+
+
+                                        <!--<ba-validation-message [input]="phoneCountryCode"></ba-validation-message>-->
+
+                                    <!--</div>-->
+                                <!--</div>-->
+
+                                <!--<div class="form-group row" baFieldFocusValidation [input]="address">-->
+                                    <!--<label class="col-sm-3 control-label">Address</label>-->
+                                    <!--<div class="col-sm-9">-->
+                                        <!--<input type="text" class="form-control" #address="ngModel" required-->
+                                               <!--placeholder="Address"-->
+                                               <!--name="address"-->
+                                               <!--[(ngModel)]="es.address">-->
+                                        <!--<ba-validation-message [input]="address"></ba-validation-message>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <h5 *ngFor="let e of errors">{{e}}</h5>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-default" type="button" (click)="providerEditModal.hide()">Close</button>
+                    <button *ngIf="!id.value" class="btn btn-primary confirm-btn" [disabled]="f.invalid" type="submit">Save Changes
+                    </button>
+                  <button *ngIf="id.value" class="btn btn-primary confirm-btn" [disabled]="f.invalid" type="submit">Update Changes
+                  </button>
+                    <i *ngIf="progress"  class="fa fa-refresh fa-spin fa-2x fa-fw" aria-hidden="true"></i>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,100 @@
+<div bsModal #eventDetailModal="bs-modal" class="modal fade"
+     role="dialog"
+     aria-labelledby="eventDetailModal"
+     aria-hidden="true">
+    <form>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Event</h4>
+                    <button class="close" (click)="eventDetailModal.hide()" aria-label="Close" type="button">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="row">
+                        <div class="col-6 border-right">
+                            <div class="row form-group">
+                                <div class="col-12" *ngIf="e.event_participant">
+                                    <label>Customer Name</label>
+                                    <br>
+                                    <span>{{getUser(e.event_participant)}}</span>
+                                </div>
+                            </div>
+                            <div class="row form-group" *ngIf="e.event_start_at">
+                                <div class="col-12">
+                                    <label>Starts At</label>
+                                    <br>
+                                    <span>{{e.event_start_at|baDate:'YYYY-MM-DD HH:mm:ss':'MMMM DD, YYYY LT'}}</span>
+                                </div>
+                            </div>
+
+                            <div class="row form-group" *ngIf="e.event_end_at">
+                                <div class="col-12">
+                                    <label>Ends At</label>
+                                    <br>
+                                    <span>{{e.event_end_at|baDate:'YYYY-MM-DD HH:mm:ss':'MMMM DD, YYYY LT'}}</span>
+                                </div>
+                            </div>
+
+                            <div class="row form-group" *ngIf="e.event_organizer">
+                                <div class="col-12">
+                                    <label>Organizers</label>
+                                    <br>
+                                    <span>{{getUser(e.event_organizer)}}</span>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-6">
+                            <label>Services/Product</label>
+                            <div class="product-scroll">
+                                <div class="product-item" *ngFor="let p of e.event_product">
+                                    {{p.business_product.name}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-12">
+                            <label>Status</label>
+                            <br>
+                            <div class="form-check form-check-inline">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="radio" name="status" [(ngModel)]="status"
+                                           value="Scheduled"> Scheduled
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="radio" name="status" [(ngModel)]="status"
+                                           value="Confirmed"> Confirmed
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="radio" name="status" [(ngModel)]="status"
+                                           value="Done"> Done
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="radio" name="status" [(ngModel)]="status"
+                                           value="Cancelled"> Cancelled
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <i *ngIf="loading" class="fa fa-spin fa-spinner"></i>
+                    <button class="btn btn-primary" (click)="update(status)">Update</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+

@@ -1,0 +1,206 @@
+<div class="row">
+    <branch-list class="col-sm-3" (onSelect)="select($event)" (onCreate)="CreateBranch()"></branch-list>
+    <branch-detail class="col-sm-9" [branch]="branch" (edit)="onEdit($event)"></branch-detail>
+</div>
+
+
+<div bsModal #branchEditModel="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+     aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+
+
+        <form #form="ngForm" (ngSubmit)="save(form.value)" class="form-horizontal" autocomplete='off'>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 *ngIf="!id.value" class="modal-title">Add Branch</h4>
+                    <h4 *ngIf="id.value" class="modal-title">Edit Branch</h4>
+                    <button class="close" aria-label="Close" (click)="branchEditModel.hide()">
+                      <i class="ion-close" aria-hidden="true"></i>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <input name="branch_id" [(ngModel)]="sBranch.id" #id="ngModel" type="hidden">
+
+                            <div class="form-group row" baFieldFocusValidation [input]="name">
+                                <label class="col-sm-4 control-label">Name</label>
+
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" name="branch_name" placeholder="Name"
+                                           [(ngModel)]="sBranch.branch_name"
+                                           #name="ngModel" required>
+                                    <ba-validation-message [input]="name"></ba-validation-message>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group row">
+                                <label class="col-sm-4 control-label">Street Number</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" placeholder="">
+
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-sm-4 control-label">Street Name</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" placeholder="">
+                                </div>
+                            </div>
+
+                            <div class="form-group row" baFieldFocusValidation [input]="business_address">
+                                <label class="col-sm-4 control-label">Address Line 1</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" placeholder="business address"
+                                           name="business_address"
+                                           [(ngModel)]="sBranch.business_address"
+                                           #business_address="ngModel"
+                                           required>
+                                    <ba-validation-message [input]="business_address"></ba-validation-message>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-sm-4 control-label">Address Line 2</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control"
+                                           placeholder="">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-sm-4 control-label">City</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control"
+                                           placeholder="">
+                                </div>
+                            </div>
+
+
+                            <div class="form-group row">
+                                <label class="col-sm-4 control-label">Post Code</label>
+                                <div class="col-sm-8">
+
+                                    <input type="text" class="form-control"
+                                           placeholder="">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-sm-4 control-label">Contact</label>
+                                <div class="col-sm-8">
+                                    <input type="text" [textMask]="{mask: mask}" class="form-control">
+                                </div>
+                            </div>
+
+
+                            <div class="form-group row" baFieldFocusValidation [input]="country">
+                                <label class="col-sm-4 control-label">Country</label>
+                                <div class="col-sm-8">
+                                    <ba-select2 name="country_id"
+                                                [(ngModel)]="sBranch.country_id"
+                                                [options]="countries"
+                                                #country="ngModel" required
+                                                modalFieldName="id"
+                                                fieldName="nicename"
+                                                placeholder="Select Countory"
+                                    ></ba-select2>
+                                    <ba-validation-message [input]="country"></ba-validation-message>
+
+                                </div>
+                            </div>
+
+
+                            <div class="form-group row">
+                                <label class="col-sm-4 control-label">TimeZone</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" name="zone_id" [(ngModel)]="sBranch.zone_id" required>
+                                        <option value="">Select</option>
+                                        <option *ngFor="let zone of zones" value="{{zone.id}}">{{zone.zone_name}}
+                                        </option>
+                                    </select>
+                                    <div *ngIf="searchingZones">
+                                        <i class=" fa fa-spinner  form-control-feedback zone-loading"
+                                           aria-hidden="true"></i>
+                                        <span class="sr-only">(loading)</span>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="col-sm-6" ngModelGroup="branch_schedule">
+
+
+                            <div class="row form-group">
+                                <div class="col-sm-4 offset-sm-2 text-center">
+                                    <h4>Start</h4>
+                                </div>
+                                <div class="col-sm-4 text-center">
+                                    <h4>End</h4>
+                                </div>
+
+                            </div>
+
+                            <div class="row form-group" [ngModelGroup]="i"
+                                 *ngFor="let item of sBranch.business_location_schedule;let i=index;">
+                                <input type="hidden" name="week_day_id" [ngModel]="item.week_day_id">
+                                <input type="hidden" name="id" [ngModel]="item.id">
+                                <input type="hidden" name="business_location_id"
+                                       [ngModel]="item.business_location_id">
+
+                                <div class="col-sm-2">
+                                    {{item.week_day_id|baWeekName}}
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <ba-time-picker [ngModel]="item.open_at"
+                                                    name="open_at"></ba-time-picker>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <ba-time-picker [ngModel]="item.close_at"
+                                                    name="close_at"></ba-time-picker>
+                                </div>
+
+                                <div class="col-sm-2">
+                                    <ui-switch [ngModel]="item.is_open"
+                                               size="small"
+                                               name="is_open"></ui-switch>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row" *ngFor="let error of errors">
+                        <div class="col-sm-12 text-center">
+                            {{error}}
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="modal-footer">
+
+                    <button class="btn btn-secondary confirm-btn" type="button" (click)="branchEditModel.hide()">Close
+                    </button>
+                    <button *ngIf="id.value" class="btn btn-primary confirm-btn" type="submit">Update Changes</button>
+                    <button *ngIf="!id.value" class="btn btn-primary confirm-btn" [disabled]="form.invalid"
+                            type="submit">Save changes
+                    </button>
+                    <button class="btn btn-danger confirm-btn pull-left" type="button" (click)="delete()"
+                            *ngIf="id.value">Delete
+                    </button>
+
+                </div>
+            </div>
+        </form>
+
+
+    </div>
+</div>
+

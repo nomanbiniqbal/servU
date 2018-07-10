@@ -1,0 +1,23 @@
+<ba-card baCardClass="xmedium-card">
+    <div class="my-providers">
+        <div class="row">
+            <div class="col-1">
+                <i class="fa fa-spinner fa-spin" *ngIf="eventLoading"></i>
+            </div>
+            <div class="col-11">
+                <select class="form-control" ngModel name="provider" #provider="ngModel">
+                    <option value="">Provider list</option>
+                    <option *ngFor="let p of providers" [value]="p.id">{{p.name}}</option>
+                </select>
+            </div>
+
+        </div>
+    </div>
+
+    <ba-full-calendar [baFullCalendarConfiguration]="calendarConfiguration"
+                      container="body"
+                      placement="bottom"
+                      triggers="mouseenter:mouseleave"
+                      (onCalendarReady)="onCalendarReady($event)"></ba-full-calendar>
+</ba-card>
+<app-event-create-popup #event (create)="refresh()"></app-event-create-popup>

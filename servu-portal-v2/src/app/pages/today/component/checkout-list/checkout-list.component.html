@@ -1,0 +1,43 @@
+<ul class="list-group">
+    <div class="today-list" *ngFor="let item of list" (click)="onSelect(item)">
+
+        <!--<b>{{item.summary}}</b>-->
+        <!--<br>-->
+        <!--"{{item.event_start_at}} - {{item.event_end_at}}"-->
+
+
+
+        <div class="row">
+
+          <div class="col-6">
+            <div class="user-name pull-left" *ngFor="let participant of item.event_participant">
+              {{participant.business_user.user.name}}
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="date-style pull-right">
+              <i *ngIf="item.loading" class="fa fa-spin fa-spinner"></i>
+              {{item.event_start_at|baDate:'YYYY-MM-DD HH:mm:ss':'DD MMMM, YYYY LT'}}
+            </div>
+          </div>
+
+        </div>
+
+        <!--{{item.summary}} "{{item.event_start_at|baDate:'YYYY-MM-DD HH:mm:ss':'MMMM DD, YYYY LT'}} - -->
+        <!--{{item.event_end_at|baDate:'YYYY-MM-DD HH:mm:ss':'MMMM DD, YYYY LT'}}"-->
+
+        <div class="col-10">
+          <div *ngFor="let products of item.event_product">
+            <span>{{products.business_product.name}}</span>
+          </div>
+        </div>
+
+        <span class="user-org" *ngFor="let organizer of item.event_organizer">
+               <i class="fa fa-user-circle-o"></i>  {{organizer.business_user.user.name}}
+            </span>
+
+
+
+
+    </div>
+</ul>

@@ -1,0 +1,146 @@
+<div class="row">
+  <ba-card class="col-sm-4" title="Services" baCardClass="viewport100 with-scroll" (onAction)="serviceEdit.show()"
+           cardType="card-action"
+           baCardActionClass="fa fa-plus-circle">
+    <services-list></services-list>
+  </ba-card>
+  <ba-card class="col-sm-5"  title="Name of service"  baCardClass="viewport100 with-scroll">
+    <services-detail></services-detail>
+  </ba-card>
+  <ba-card class="col-sm-3" title="Providers" cardType="card-action" (onAction)="providerAdd.show()"
+           baCardActionClass="fa fa-plus-circle"
+           baCardClass="viewport100 with-scroll">
+    <service-provider-list></service-provider-list>
+  </ba-card>
+</div>
+
+
+<div bsModal #serviceEdit="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+     aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+
+    <form class="form-horizontal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button class="close" aria-label="Close" (click)="serviceEdit.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title">Add Service</h4>
+        </div>
+
+        <div class="modal-body">
+
+
+          <tabset>
+            <tab heading='Service'>
+              <form class="form-horizontal">
+                <div class="form-group row">
+                <div class="form-group col-sm-2" >
+                  <label >Price</label>
+                </div>
+                <div class="form-group col-sm-3">
+                  <input type="email" class="form-control" placeholder="$">
+                </div>
+
+                <div class="form-group col-sm-2 "  >
+                  <label  >Duration</label>
+                </div>
+                <div class="form-group col-sm-3 ">
+                  <input type="email" class="form-control" placeholder="Duration">
+                </div>
+                </div>
+
+                <div class="form-group row">
+                <div class="form-group" class="col-sm-2" >
+                  <label  >Category</label>
+                </div>
+                <div class="form-group col-sm-3 ">
+                  <input type="email" class="form-control" placeholder="Category">
+                </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-sm-4 form-control-label">Tax Include in Price</label>
+                  <div class="col-sm-4">
+                    <select class="form-control" id="sel1">
+                      <option>Something </option>
+                      <option>TDO</option>
+                      <option>78797</option>
+                      <option>4444ddd</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-3 form-control-label">Enable Comission</label>
+                  <ui-switch ></ui-switch>
+
+
+
+                </div>
+
+              </form>
+            </tab>
+            <tab heading="Catogery">
+              <form class="form-horizontal">
+              <div class="form-group row">
+                 <div class="col-sm-10">
+              <input type="text" class="form-control " placeholder="ADD Category">
+                 </div>
+                <div class="col-sm-1">
+              <i class="fa fa-plus-circle fa-2x " aria-hidden="true"></i>
+                </div>
+              </div>
+              </form>
+              <services-list></services-list>
+            </tab>
+          </tabset>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary confirm-btn" type="button" (click)="serviceEdit.hide()">Close</button>
+          <button class="btn btn-primary confirm-btn" type="submit" (click)="serviceEdit.hide()">Save changes</button>
+        </div>
+      </div>
+    </form>
+
+
+  </div>
+</div>
+
+<div bsModal #providerAdd="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+     aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+
+    <form class="form-horizontal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button class="close" aria-label="Close" (click)="providerAdd.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title">Edit Service Providers</h4>
+        </div>
+
+        <div class="modal-body">
+          <div class="row">
+            <input class="form-control" placeholder="search">
+          </div>
+          <ul class="list-group">
+            <li class="list-group-item">kamran</li>
+            <li class="list-group-item">kamran</li>
+            <li class="list-group-item">kamran</li>
+            <li class="list-group-item">kamran</li>
+            <li class="list-group-item">kamran</li>
+          </ul>
+
+        </div>
+
+
+        <div class="modal-footer">
+          <button class="btn btn-secondary confirm-btn" type="button" (click)="providerAdd.hide()">Close</button>
+          <button class="btn btn-primary confirm-btn" type="submit" (click)="providerAdd.hide()">Save changes</button>
+        </div>
+      </div>
+    </form>
+
+
+  </div>
+</div>

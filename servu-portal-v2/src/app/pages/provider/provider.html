@@ -1,0 +1,32 @@
+<div class="row">
+    <ba-card class="col-sm-3 no-body-padding list-card-padding"
+             title="List"
+             cardType="card-action"
+             (onAction)="setScheduleProvider()"
+             baCardClass="Provider-list-card-height"
+             (onAction)="popup.create()"
+             baCardActionClass="fa fa-plus-circle">
+        <provider-list (onSelect)="select($event)"></provider-list>
+    </ba-card>
+
+    <div class="col-sm-9">
+
+        <div class="row">
+
+          <provider-detail class="col-sm-6 card-padding-right-left" [provider]="pro"></provider-detail>
+
+          <basic-schedule *ngIf="pro.id" class="col-sm-6 bottom-list-card-padding with-scroll" [providerId]="pro.id"></basic-schedule>
+
+        </div>
+
+
+        <div class="row" *ngIf="pro.id">
+
+            <advance-schedule class="col-sm-6 card-padding-right-left with-scroll" [providerId]="pro.id"></advance-schedule>
+            <google-calender-list class="col-sm-6 bottom-list-card-padding" [businessUserId]="pro.business_user[0].id" [providerId]="pro.id"></google-calender-list>
+
+        </div>
+  </div>
+</div>
+
+<provider-popup #popup></provider-popup>

@@ -1,0 +1,15 @@
+<input [(ngModel)]="selected"
+       [typeahead]="countries"
+       [type]="phoneOnly?'number':'text'"
+       [typeaheadOptionField]="phoneOnly?'phonecode':'nicename'"
+       typeaheadOptionsLimit="7"
+       [placeholder]="phoneOnly?'Please type country code':'Please type country'"
+       (typeaheadOnSelect)="onCountrySelect($event)"
+       (typeaheadOnBlur)="onCountrySelect($event)"
+       [typeaheadItemTemplate]="customItemTemplate"
+       class="form-control">
+
+<template #customItemTemplate let-model="item" let-index="index">
+    <h6 *ngIf="!phoneOnly">{{model.name}}</h6>
+    <h6 *ngIf="phoneOnly">{{model.nicename}} for {{model.phonecode}}</h6>
+</template>

@@ -1,0 +1,36 @@
+service-provider-list {
+
+  ul {
+    background-color: #ffffff;
+  }
+
+  li:hover {
+    background-color: #82cdfa;
+    cursor: pointer;
+  }
+
+  .OnSelected {
+    background-color: #4db8f8;
+    cursor: pointer;
+    color: #ffffff;
+    line-height: 35px;
+  }
+
+  .list-item {
+    line-height: 35px;
+    padding-left: 10px;
+    border-radius: 5px;
+  }
+
+  .list-item:hover {
+    background-color: #82cdfa;
+    cursor: pointer;
+    color: #ffffff;
+  }
+
+  .with-scroll{
+    height:calc(100% - 55px);
+    overflow-y:auto;
+  }
+
+}

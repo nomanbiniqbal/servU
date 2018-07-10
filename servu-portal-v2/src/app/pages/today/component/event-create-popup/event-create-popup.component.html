@@ -1,0 +1,178 @@
+<div bsModal #eventCreateModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+     aria-labelledby="myLargeModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-xlg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Appointment</h4>
+                <button class="close" (click)="eventCreateModal.hide()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-3 padding-15">
+
+                        <div class="form-group">
+
+                            <ba-select2 placeholder="Select Customer"
+                                        [(ngModel)]="customerModal"
+                                        name="name"
+                                        (onSelect)="onCustomerSelect($event)"
+                                        [options]="customers" fieldName="name" modalFieldName="name"></ba-select2>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="float-right">
+                                    <button class="btn btn-primary" type="button" (click)="popup.create()"><i
+                                            class="fa fa-plus"></i> Add New
+                                    </button>
+                                    <button class="btn btn-default" (click)="customerModal=''">Clear</button>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="overview-sep">
+                            <span><span>over view</span></span>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-sm-4">Customer:</div>
+                            <div class="col-sm-8">{{sCustomer.name}}</div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-sm-4">Services:</div>
+                            <div class="col-sm-8">{{sService}}
+                            </div>
+                        </div>
+
+                        <div class="row form-group">
+                            <div class="col-sm-4">Provider:</div>
+                            <div class="col-sm-8">{{sProvider}}</div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-sm-4">Branch:</div>
+                            <div class="col-sm-8">Branchmy</div>
+                        </div>
+
+                        <div class="row form-group">
+                            <div class="col-sm-4">Date:</div>
+                            <div class="col-sm-8" *ngIf="selectedSlot">{{selectedSlot.format("ddd, DD, MMM YYYY")}}
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-sm-4">Time:</div>
+                            <div class="col-sm-8" *ngIf="selectedSlot">{{selectedSlot.format("LT")}} -
+                                {{selectedSlot.clone().add(totalTime,'minute').format("LT")}}
+                            </div>
+                        </div>
+
+                        <div class="row form-group">
+                            <div class="col-sm-12"><textarea class="form-control" width="100%" rows="5"
+                                                             placeholder="please add some addtional notes"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-3 padding-15">
+                        <app-product-list #plist [multiple]="true" type="Service"
+                                          (select)="onProductSelect($event)"></app-product-list>
+                    </div>
+
+                    <div class="col-sm-6 padding-15">
+
+                        <div class="row form-group">
+                            <select class="form-control" name="provider" [(ngModel)]="sProvider"
+                                    (change)="selectProvider(sProvider)">
+                                <option value="">{{providers.length>0?'Select Provider':'No Providers'}}</option>
+                                <option *ngFor="let item of providers" [value]="item.user_id">{{item.user.name}}
+                                </option>
+                            </select>
+
+                        </div>
+
+                        <div class="slot-div" *ngIf="sProvider">
+                            <div class="row calendar-pane">
+                                <div class="col-sm-11">
+                                    <div class="row">
+                                        <div class="bd-col text-center">M</div>
+                                        <div class="bd-col text-center">T</div>
+                                        <div class="bd-col text-center">W</div>
+                                        <div class="bd-col text-center">T</div>
+                                        <div class="bd-col text-center">F</div>
+                                        <div class="bd-col text-center">S</div>
+                                        <div class="bd-col text-center">Su</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="bd-col text-center"
+                                             *ngFor="let item of weekDates"
+                                             (click)="loadSlots(item,sProvider)">
+                                            <div [ngClass]="{selected: item.date.isSame(selectedDate,'day')}">
+                                                {{item.name}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-1">
+                                    <div class="row">
+                                        <div class="col-12 text-center" style="padding: 0;">
+                                            <small>{{selectedDate.format("MMMM")}}</small>
+                                        </div>
+                                    </div>
+                                    <div class="row"
+                                         [options]="myOptions"
+                                         ngx-mydatepicker
+                                         (click)="dp.toggleCalendar()"
+                                         name="cDate"
+                                         (dateChanged)="onDateChanged($event,sProvider)"
+                                         [(ngModel)]="datepickerModal"
+                                         #dp="ngx-mydatepicker">
+                                        <div class="col-12 text-center">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <br>
+
+                            <div class="row form-group" *ngIf="sloteLoading">
+                                <div class="col-12 text-center">
+                                    <i class="fa fa-spin fa-spinner"></i>
+                                </div>
+                            </div>
+
+                            <div class="row form-group" *ngIf="!sloteLoading">
+                                <div *ngIf="slots.length==0" class="col-12 text-center">No Slots Available</div>
+                                <div class="col-sm-3 text-center" *ngFor="let item of slots">
+                                    <button class="btn btn-outline-primary"
+                                            [ngClass]="{'btn-primary':item.date.isSame(selectedSlot)}"
+                                            (click)="selectSlot(item.date)">{{item.name}}
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="modal-footer">
+                <div *ngIf="error" class="text-center">
+                    {{error}}
+                </div>
+                <div *ngIf="loading">
+                    <i class="fa fa-spinner fa-spin"></i>
+                </div>
+                <button class="btn btn-primary confirm-btn" [disabled]="!selectedSlot" (click)="createEvent()">Save
+                    changes
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<popup-customer #popup (onCreate)="onCustomerCreate($event)"></popup-customer>

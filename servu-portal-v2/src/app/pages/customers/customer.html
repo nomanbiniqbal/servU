@@ -1,0 +1,207 @@
+<div class="row">
+    <ba-card class="col-sm-3 no-body-padding list-card-padding"
+             title="Customers"
+             cardType="card-action"
+             baCardClass="viewport100"
+             (onAction)="popup.create()"
+             baCardActionClass="fa fa-plus-circle">
+        <customer-list (onSelect)="onSelect($event)"></customer-list>
+    </ba-card>
+
+    <div class="col-9 card-padding-right-left">
+        <div class="row">
+            <ba-card class="col-sm-12"
+                     baCardClass="viewport100"
+                     [title]="selectedCustomer.name"
+                     cardType="card-action"
+                     (onAction)="popup.edit(selectedCustomer)"
+                     [baCardActionClass]="selectedCustomer.id?'fa fa-pencil-square-o':''">
+
+                <div class="container text-center" *ngIf="!selectedCustomer.id" style="padding: 100px">
+                  <i *ngIf="!loading" class="fa fa-user-plus" style="font-size: 50px"></i><br><br>
+                    <h3 class="text-center" *ngIf="!loading">Please Select Any Customer</h3>
+                  <p *ngIf="!loading" >If there is no customer first you add new customer </p>
+                    <div class="text-center"><span *ngIf="loading"><i class="fa fa-spin fa-spinner"></i> </span></div>
+                </div>
+
+                <div class="container" *ngIf="selectedCustomer.id">
+                    <div class="row">
+                        <div class="form-group row">
+                            <label class="form-control-label col-sm-3">Email</label>
+                            <div class="col-sm-9">
+                                {{selectedCustomer.email}}
+                            </div>
+                        </div>
+
+                        <!--<div class="form-group row">-->
+                        <!--<label class="form-control-label col-sm-2">Address</label>-->
+                        <!--<div class="col-sm-8">-->
+                        <!--{{selectedCustomer.address}}-->
+                        <!--</div>-->
+                        <!--</div>-->
+                        <div class="col-sm-4">
+                            <h4 class="card-title">Addresses<i class="fa fa-plus-circle pull-right"
+                                                               (click)="createAdress(f)"></i></h4>
+                            <hr>
+                            <div style="height:250px;width:250px; overflow-x:scroll ; overflow-y: scroll; padding-bottom:10px;">
+                                <div style="text-align: left" *ngFor="let a of selectedCustomer.user_address">
+                                    <i class="fa fa-edit pull-left" (click)="editAddress(a,f)"></i>
+                                    {{a.address}}
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!--<div class="form-group row">-->
+                        <!--<label class="form-control-label col-sm-2">Telephone</label>-->
+                        <!--<div class="col-sm-8">-->
+                        <!--{{selectedCustomer.telephone}}-->
+                        <!--</div>-->
+                        <!--</div>-->
+                        <div class="col-sm-4">
+                            <h4 class="card-title">Contacts<i class="fa fa-plus-circle pull-right"
+                                                              (click)="createContact(cf)"></i></h4>
+                            <hr>
+                            <div style="height:250px;width:250px; overflow-x:scroll ; overflow-y: scroll; padding-bottom:10px;">
+                                <div style="text-align: left" *ngFor="let a of selectedCustomer.user_contact">
+                                    <i class="fa fa-edit pull-left" (click)="editContact(a,cf)"></i>
+                                    {{a.phone_number}}
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </ba-card>
+        </div>
+
+        <div class="row" *ngIf="selectedCustomer.id">
+            <ba-card class="col-8 card-padding-left"
+                     title="Notes"
+                     cardType="card-action"
+                     baCardClass="viewport100"
+                     (onAction)="createNotes.createPoup(selectedCustomer)"
+                     baCardActionClass="fa fa-plus-circle">
+                <app-notelist [selectedcustomerid]="selectedCustomer.id"></app-notelist>
+            </ba-card>
+            <app-membership [id]="selectedCustomer.id" *ngIf="selectedCustomer.id" class="col-4"></app-membership>
+        </div>
+    </div>
+</div>
+
+<app-notelist #createNotes></app-notelist>
+
+<popup-customer #popup></popup-customer>
+
+
+<div bsModal #addressModel="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+     aria-labelledby="myLargeModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <form #f="ngForm" (ngSubmit)="submitAddress(f.value,f)" autocomplete="off">
+
+                <div class="modal-header">
+
+                    <h4 class="modal-title">Address</h4>
+                  <button class="close pull-right" type="button" (click)="addressModel.hide()" aria-label="Close">
+                    <i class="ion-close" aria-hidden="true"></i>
+
+                  </button>
+                </div>
+                <div class="modal-body">
+                <input type="hidden" name="user_id" [ngModel]="cus.id">
+                <input type="hidden" name="address_id" [ngModel]="ad.id" #id="ngModel">
+
+                <div class="form-group row">
+                    <label class="col-sm-3 control-label">Address</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" required placeholder="Address"
+                               name="address"
+                               [ngModel]="ad.address">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-3 control-label">Public</label>
+                    <div class="col-sm-9">
+                        <ui-switch name="is_primary" [ngModel]="ad.is_primary"></ui-switch>
+                    </div>
+                </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary confirm-btn" type="button" (click)="addressModel.hide()">Close
+                    </button>
+                    <button class="btn btn-primary confirm-btn" type="submit">Save changes</button>
+                    <button class="btn btn-danger confirm-btn pull-left" type="button" (click)="deleteAddress(id.value)"
+                            *ngIf="id.value">Delete
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<div bsModal #contactModel="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+     aria-labelledby="myLargeModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <form #cf="ngForm" (ngSubmit)="submitContact(cf.value,cf)" autocomplete="off">
+
+                <div class="modal-header">
+
+                    <h4 class="modal-title">Edit Contact</h4>
+                  <button class="close" type="button" (click)="contactModel.hide()" aria-label="Close">
+                    <i class="ion-close" aria-hidden="true"></i>
+
+                  </button>
+                </div>
+              <div class="modal-body">
+
+              <input type="hidden" name="user_id" [ngModel]="cus.id">
+                <input type="hidden" name="contact_id" [ngModel]="cn.id" #cid="ngModel">
+                <div class="form-group row">
+                    <label class="col-sm-4 control-label">Phone Code</label>
+                    <div class="col-sm-8">
+                        <input type="number" class="form-control" required placeholder="029"
+                               name="phone_country_code"
+                               [ngModel]="cn.phone_country_code">
+                    </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-4 control-label">Telephone</label>
+                  <div class="col-sm-8">
+                    <input type="number" class="form-control" required placeholder="1234567891"
+                           name="phone_number"
+                           [ngModel]="cn.phone_number">
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-4 control-label">Public</label>
+                    <div class="col-sm-8">
+                        <ui-switch name="is_public" [ngModel]="cn.is_public"></ui-switch>
+                    </div>
+                </div>
+              </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary confirm-btn" type="button" (click)="contactModel.hide()">Close
+                    </button>
+                    <button class="btn btn-primary confirm-btn" type="submit">Save changes</button>
+                    <button class="btn btn-danger confirm-btn pull-left" type="button"
+                            (click)="deleteContact(cid.value,cus.id)"
+                            *ngIf="cid.value">Delete
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+

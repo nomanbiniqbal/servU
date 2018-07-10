@@ -1,0 +1,115 @@
+<ba-card baCardClass="Provider-card-height" title="Advance Schedule"
+
+         (onAction)="create()"
+         cardType="card-action"
+         baCardActionClass="fa fa-plus-circle">
+
+
+    <div class="row">
+        <div class="col-4 card-title">Date</div>
+        <div class="col-3 card-title">Start</div>
+        <div class="col-3 card-title">End</div>
+        <div class="col-1 card-title">Edit</div>
+    </div>
+
+    <div class="line-hr"></div>
+    <div class="text-center" *ngIf="loading">
+        <i class="fa fa-spinner fa-spin"></i>
+    </div>
+
+
+        <div *ngIf="!loading">
+
+            <div class="row" *ngFor="let s of schedule">
+
+                <div class="col-4">{{s.schedule_date}}</div>
+                <div class="col-3">{{s.open_at}}</div>
+                <div class="col-3">{{s.close_at}}</div>
+                <div class="col-1"><i class="fa fa-edit" (click)="edit(s)"></i></div>
+
+            </div>
+
+        </div>
+
+
+
+</ba-card>
+
+<div bsModal #scheduleModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+     aria-labelledby="myLargeModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <form #f="ngForm" (ngSubmit)="submit(f.value)" autocomplete="off">
+
+                <div class="modal-header">
+                  <h4 class="modal-title">Create</h4>
+                  <button class="close pull-right" type="button" (click)="scheduleModal.hide()" aria-label="Close">
+                    <i class="ion-close" aria-hidden="true"></i>
+                  </button>
+                </div>
+                <input type="hidden" name="user_id" [ngModel]="id">
+
+                <input type="hidden" name="user_schedule_id" [ngModel]="s.id" #sid="ngModel">
+
+                <div class="row date-row">
+                    <datepicker [ngModel]="s.schedule_date" name="schedule_date"></datepicker>
+                </div>
+
+                <div class="container form-group">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <ba-time-picker [ngModel]="s.open_at" name="open_at"></ba-time-picker>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <ba-time-picker [ngModel]="s.close_at" name="close_at"></ba-time-picker>
+                        </div>
+
+                        <div class="col-sm-2">
+                            <ui-switch [(ngModel)]="s.is_open" name="is_open"></ui-switch>
+                        </div>
+                    </div>
+                    <div ngModelGroup="user_schedule_break">
+                        <div class="container">
+                            <button type="button" class="btn" (click)="s.user_schedule_break.push({})"
+                                    [disabled]="!s.is_open">+Break
+                            </button>
+                        </div>
+
+                        <div class="row" *ngFor="let b of s.user_schedule_break;let i = index;"
+                             [ngModelGroup]="i">
+                            <div class="col-sm-4 offset-sm-2">
+                                <ba-time-picker [ngModel]="b.break_start"
+                                                name="break_start"></ba-time-picker>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <ba-time-picker [ngModel]="b.break_end"
+                                                name="break_end"></ba-time-picker>
+                            </div>
+
+                            <div class="col-sm-2">
+                                <button class="btn btn-sm" type="button" (click)="s.user_schedule_break.splice(i,1)">
+                                    remove
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="modal-footer">
+                    <button class="btn btn-secondary confirm-btn" type="button" (click)="scheduleModal.hide()">Close
+                    </button>
+                    <button class="btn btn-primary confirm-btn" type="submit">Save changes</button>
+                    <button class="btn btn-danger confirm-btn pull-left" type="button" (click)="delete(sid.value)"
+                            *ngIf="sid.value">Delete
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>

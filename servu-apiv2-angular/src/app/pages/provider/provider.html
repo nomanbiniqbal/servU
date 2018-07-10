@@ -1,0 +1,19 @@
+<div class="row">
+  <ba-card class="col-xlg-9 col-xl-9 col-lg-9 col-sm-9 col-xs-12" baCardClass="viewport100">
+    <div class="row">
+      <provider-list class="col-sm-4 col-xs-12"></provider-list>
+      <provider-form class="col-sm-8 col-xs-12"></provider-form>
+    </div>
+  </ba-card>
+
+
+  <ba-card class="col-xlg-3 col-xl-3 col-lg-3 col-sm-3 col-xs-12"
+           (onAction)="onSync()"
+           cardType="card-action"
+           baCardActionClass="fa fa-refresh"
+           baCardClass="viewport100 with-scroll" title="Google Integration">
+
+    <google-calender-list></google-calender-list>
+
+  </ba-card>
+</div>

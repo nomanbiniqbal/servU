@@ -1,0 +1,65 @@
+<div *ngIf="!list.length">
+    <div class="text-center" *ngIf="loading">
+        <i class="fa fa-spin fa-spinner"></i>
+    </div>
+    <div *ngIf="!loading">
+        <span>Please click add.</span>
+    </div>
+
+
+</div>
+
+
+<div *ngIf="list.length">
+    <div class="search-field" style="padding-bottom: 10px;">
+        <input type="text" class="form-control" [(ngModel)]="s" (keyup)="search(s)" placeholder="Search">
+    </div>
+</div>
+<accordion closeOthers="true">
+
+    <div *ngIf="switch">
+        <div *ngFor="let item of list">
+            <div *ngIf="item.name!='Others'&& item.business_product.length>0">
+
+                <accordion-group #group class="category-card">
+                    <div accordion-heading>
+                        {{item.name}}
+                        <i class="pull-left fa fa-angle-down"
+                           [ngClass]="{'fa-angle-up': group?.isOpen, 'fa-angle-down': !group?.isOpen}"></i>
+
+                    </div>
+                    <ul class="list-group">
+                        <div class="list-item" *ngFor="let serviceItem of item.business_product"
+                             [ngClass]="{OnSelected: isSelected(serviceItem.id)}"
+                             (click)="onSelect(serviceItem)">
+                            <i class="fa fa-angle-right fa-fw" aria-hidden="true"></i>{{serviceItem.name}}
+                        </div>
+                    </ul>
+                </accordion-group>
+            </div>
+
+            <div *ngIf="item.name=='Others'">
+                <ul class="list-group">
+                    <div class="list-item" *ngFor="let serviceItem of item.business_product"
+                         [ngClass]="{OnSelected: isSelected(serviceItem.id)}"
+                         (click)="onSelect(serviceItem)">
+                        <i class="fa fa-angle-right fa-fw" aria-hidden="true"></i>{{serviceItem.name}}
+                    </div>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+    <div *ngIf="!switch">
+        <ul class="list-group">
+            <li class="list-group-item" *ngFor="let item of searchlistresult" (click)="onSelect(item)"
+                [ngClass]="{OnSelected: isSelected(item.id)}">
+                {{item.productName}}
+                <p style="font-size: x-small; text-align: match-parent; padding-right: 1.2em;">
+                    {{item.catName}}
+                </p>
+            </li>
+
+        </ul>
+    </div>

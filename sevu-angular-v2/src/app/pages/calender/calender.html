@@ -1,0 +1,13 @@
+<ba-card baCardClass="viewport100 with-scroll">
+    <select class="form-control my-providers" ngModel name="provider" #provider="ngModel">
+        <option value="">Provider list</option>
+        <option *ngFor="let p of providers" [value]="p.id">{{p.name}}</option>
+    </select>
+
+    <ba-full-calendar [baFullCalendarConfiguration]="calendarConfiguration"
+                      container="body"
+                      placement="bottom"
+                      triggers="mouseenter:mouseleave"
+                      (onCalendarReady)="onCalendarReady($event)"></ba-full-calendar>
+</ba-card>
+<app-event-create-popup #event></app-event-create-popup>

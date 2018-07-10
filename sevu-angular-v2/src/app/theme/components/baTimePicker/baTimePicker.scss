@@ -1,0 +1,16 @@
+@import "~clockpicker/dist/jquery-clockpicker";
+
+ba-time-picker {
+
+  .form-control[readonly] {
+    color: #666666;
+    border: 1px solid #cbcbcb;
+  }
+}
+
+.clockpicker-popover {
+  z-index: 9999 !important;
+  .btn:hover {
+    transform: none;
+  }
+}

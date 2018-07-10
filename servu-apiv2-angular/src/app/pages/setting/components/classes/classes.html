@@ -1,0 +1,206 @@
+<div class="row">
+  <ba-card class="col-sm-4" title="Services" baCardClass="viewport100 with-scroll" (onAction)="serviceEdit.show()"
+           cardType="card-action"
+           baCardActionClass="fa fa-plus-circle">
+   <classes-list></classes-list>
+  </ba-card>
+  <ba-card class="col-sm-5"  title="Name of Class"  baCardClass="viewport100 with-scroll">
+    <classs-detail></classs-detail>
+    <tabset>
+      <tab  heading="Class Schedule">
+        <classes-list></classes-list>
+      </tab>
+      <i style="position: absolute;left: 88.5%;top:35% " data-toggle="modal" (click)="staticModal.show()" class="fa fa-plus-circle " (select)="alertMe()" aria-hidden="true">
+
+      </i>
+    </tabset>
+  </ba-card>
+  <ba-card class="col-sm-3" title="Providers" cardType="card-action" (onAction)="providerAdd.show()"
+           baCardActionClass="fa fa-plus-circle"
+           baCardClass="viewport100 with-scroll">
+   <class-provider-list></class-provider-list>
+  </ba-card>
+</div>
+
+
+<div bsModal #serviceEdit="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+     aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+
+    <form class="form-horizontal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button class="close" aria-label="Close" (click)="serviceEdit.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title">Add Class</h4>
+        </div>
+
+        <div class="modal-body">
+
+
+
+              <form class="form-horizontal">
+
+                <div class="form-group row">
+
+                  <div class="form-group col-sm-2" >
+                    <label >Name</label>
+                  </div>
+                  <div class="form-group col-sm-6">
+                    <input type="email" class="form-control" placeholder="Name">
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <div class="form-group col-sm-12">
+                    <textarea class="form-control" rows="5" id="comment" placeholder="Decription"></textarea>
+                  </div>
+                </div>
+
+
+                  <div class="form-group row">
+
+                  <div class="form-group col-sm-2" >
+                    <label >Price</label>
+                  </div>
+                  <div class="form-group col-sm-3">
+                    <input type="email" class="form-control" placeholder="$">
+                  </div>
+
+                  <div class="form-group col-sm-2 "  >
+                    <label  >Duration</label>
+                  </div>
+                  <div class="form-group col-sm-3 ">
+                    <input type="email" class="form-control" placeholder="Duration">
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <div class="form-group" class="col-sm-3" >
+                    <label  >Class SIze/ Capacity</label>
+                  </div>
+                  <div class="form-group col-sm-3 ">
+                    <input type="email" class="form-control" placeholder="Category">
+                  </div>
+                </div>
+
+
+
+
+              </form>
+
+
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary confirm-btn" type="button" (click)="serviceEdit.hide()">Close</button>
+          <button class="btn btn-primary confirm-btn" type="submit" (click)="serviceEdit.hide()">Save changes</button>
+        </div>
+      </div>
+    </form>
+
+
+  </div>
+</div>
+
+<div bsModal #providerAdd="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+     aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+
+    <form class="form-horizontal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button class="close" aria-label="Close" (click)="providerAdd.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title">Edit Service Providers</h4>
+        </div>
+
+        <div class="modal-body">
+          <div class="row">
+            <input class="form-control" placeholder="search">
+          </div>
+          <ul class="list-group">
+            <li class="list-group-item">kamran</li>
+            <li class="list-group-item">kamran</li>
+            <li class="list-group-item">kamran</li>
+            <li class="list-group-item">kamran</li>
+            <li class="list-group-item">kamran</li>
+          </ul>
+
+        </div>
+
+
+        <div class="modal-footer">
+          <button class="btn btn-secondary confirm-btn" type="button" (click)="providerAdd.hide()">Close</button>
+          <button class="btn btn-primary confirm-btn" type="submit" (click)="providerAdd.hide()">Save changes</button>
+        </div>
+      </div>
+    </form>
+
+
+  </div>
+</div>
+
+<div class="modal fade" id="myModalHorizontal1" bsModal #staticModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button class="close" aria-label="Close" (click)="staticModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Reminder</h4>
+      </div>
+      <div class="modal-body">
+        <form #d="ngForm" class="form-horizontal"  role="form">
+          <div class="form-group">
+            <div class="col-sm-10">
+              <label >Hours</label>
+              <select class="form-control"   >
+                <option>0</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+                <option>7</option>
+                <option>8</option>
+                <option>9</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-10">
+              <label for="Days">Days</label>
+              <select  class="form-control"     id="Days">
+                <option>0</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+                <option>7</option>
+                <option>8</option>
+                <option>9</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label  for="booking" >Before Booking Text</label>
+            <div class="col-sm-10">
+              <textarea      rows="4" id="booking" cols="31" placeholder="Enter Notification Text"></textarea>
+            </div>
+          </div>
+
+
+        </form>
+
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary btn-auth" type="button" (click)="savedata(reminder);staticModal.hide();">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>

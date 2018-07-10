@@ -1,0 +1,38 @@
+<ul class="list-group">
+    <li class="my-list-item" *ngFor="let item of list" (click)="onSelect(item)">
+
+        <!--<b>{{item.summary}}</b>-->
+        <!--<br>-->
+        <!--"{{item.event_start_at}} - {{item.event_end_at}}"-->
+      <div class="row" style="background-color: #3D88B8; margin-bottom: 2px;">
+
+        <div class="row">
+          <div class="col-6">
+           <span class="participantName" *ngFor="let participant of item.event_participant">
+            {{participant.business_user.user.name}}
+          </span>
+          </div>
+          <div class="col-6">
+            <span class="eventTime" style="float: right; font-size: 10px">
+            {{item.event_start_at|baDate:'YYYY-MM-DD HH:mm:ss':'MMMM DD, YYYY LT'}}
+              </span>
+          </div>
+        </div>
+
+        <!--{{item.summary}} "{{item.event_start_at|baDate:'YYYY-MM-DD HH:mm:ss':'MMMM DD, YYYY LT'}} - -->
+        <!--{{item.event_end_at|baDate:'YYYY-MM-DD HH:mm:ss':'MMMM DD, YYYY LT'}}"-->
+
+        <div class="products">
+          <span class="productName" style="font-size: 10px;" *ngFor="let products of item.event_product">
+            {{products.business_product.name}}
+          </span>
+        </div>
+
+        <div class="organizer">
+           <span class="organizerName" *ngFor="let organizer of item.event_organizer">
+            {{organizer.business_user.user.name}}
+          </span>
+        </div>
+      </div>
+    </li>
+</ul>

@@ -1,0 +1,54 @@
+@import '../../theme/sass/conf/conf';
+
+.my-providers {
+  width: 211px;
+  position: absolute;
+  right: 200px;
+}
+
+.disable-cell {
+  background: #ececec;
+}
+
+.no-margin {
+  .card {
+    margin-bottom: 0;
+  }
+}
+
+.webui-popover-blue {
+  background: #E5F5FC;
+  color: #16607D;
+  .webui-popover-title {
+    background: #16607D;
+    color: #E5F5FC;
+  }
+}
+
+.webui-popover-gray {
+  background: #F1F0F0;
+  color: #4E4D4B;
+  .webui-popover-title {
+    background: #4E4D4B;
+    color: #F1F0F0;
+  }
+}
+
+.webui-popover-green {
+  background: #DAF6D0;
+  color: #2F6C23;
+  .webui-popover-title {
+    background: #2F6C23;
+    color: #DAF6D0;
+  }
+}
+
+.webui-popover-red {
+  background: #FFE0E6;
+  color: #910A18;
+  .webui-popover-title {
+    background: #910A18;
+    color: #FFE0E6;
+  }
+}
+

@@ -1,0 +1,29 @@
+.google-list {
+  line-height: 30px;
+  padding-left: 12px;
+  padding-right: 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 2px;
+}
+
+.line-hr {
+  display: block;
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+  margin-left: auto;
+  margin-right: auto;
+  border-style: inset;
+  border-width: 1px;
+}
+
+.google-list-int {
+  font-size: 16px;
+  //font-weight: bold;
+  padding-top: 12px;
+}
+
+.google-list-checkbox {
+  padding-top: 35px;
+  //padding-left: 44px;
+}

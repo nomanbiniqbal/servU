@@ -1,0 +1,116 @@
+<ba-card class="no-body-padding"
+         title="Memeberships"
+         cardType="card-action"
+         baCardClass="viewport100 with-scroll"
+         (onAction)="add()"
+         baCardActionClass="fa fa-plus-circle">
+    <ul class="list-group">
+        <li class="list-group-item" *ngFor="let m of customerMemberships" (click)="payment.show(m)">
+            {{m.membership.membership_name}}
+        </li>
+    </ul>
+</ba-card>
+
+<div bsModal #addMemberShipModal="bs-modal" class="modal fade membership-modal" tabindex="-1" role="dialog"
+     aria-labelledby="addMemberShipModal"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <form #f="ngForm" (ngSubmit)="submit(f.value)">
+            <div class="modal-content">
+
+                <div class="modal-body">
+                    <button class="close" type="button" (click)="addMemberShipModal.hide()" aria-label="Close">
+                      <i class="ion-close" aria-hidden="true"></i>
+                    </button>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="row items-title">
+                                <label>Memberships</label>
+                            </div>
+                            <div class="with-scroll">
+                                <div class="row membership-item" *ngFor="let m of memberships"
+                                     [ngClass]="{'active':m.id==selected.id}"
+                                >
+                                    <div class="col-12" (click)="selected=m">
+                                        {{m.membership_name}}
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="row items-title">
+                                <label>Price Type</label>
+                            </div>
+                            <div *ngIf="selected.membership_price">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-check form-check-inline"
+                                             *ngFor="let p of selected.membership_price">
+                                            <label class="form-check-label" for="price_id-{{p.id}}">
+                                                <input class="form-check-input" type="radio" name="price_id"
+                                                       id="price_id-{{p.id}}"
+                                                       [value]="p.id"
+                                                       ngModel
+                                                > {{p.price_type|baPriceType}}
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row items-title">
+                                    <label>Products</label>
+                                </div>
+                                <div class="with-scroll row">
+                                    <div class="col-12 product-item"
+                                         *ngFor="let p of selected.membership_business_product">
+                                        {{p.business_product.product_type}} : {{p.business_product.name}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <!--<div class="form-horizontal">-->
+
+                    <!--<div class="form-group row">-->
+                    <!--<div class="col-3">-->
+                    <!--<label>Memberships</label>-->
+                    <!--</div>-->
+                    <!--<div class="col-9">-->
+                    <!--<ba-select2 [options]="memberships" fieldName="membership_name" modalFieldName="id"-->
+                    <!--placeholder="Please select Membership"-->
+                    <!--(onSelect)="selectedMemebership=$event"></ba-select2>-->
+                    <!--</div>-->
+                    <!--</div>-->
+
+                    <!--<div class="form-group row">-->
+                    <!--<div class="col-3">-->
+                    <!--<label>Price Types</label>-->
+                    <!--</div>-->
+                    <!--<div class="col-9" *ngIf="selectedMemebership">-->
+                    <!--<div class="form-check form-check-inline"-->
+                    <!--*ngFor="let p of selectedMemebership.membership_price">-->
+                    <!--<label class="form-check-label">-->
+                    <!--<input class="form-check-input" type="radio" name="inlineRadioOptions"-->
+                    <!--id="inlineRadio1" value="option1"> {{p.price_type|baPriceType}}-->
+                    <!--</label>-->
+                    <!--</div>-->
+
+                    <!--</div>-->
+                    <!--</div>-->
+
+                    <!--</div>-->
+
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" type="submit"> Save</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<app-membership-payment #payment></app-membership-payment>

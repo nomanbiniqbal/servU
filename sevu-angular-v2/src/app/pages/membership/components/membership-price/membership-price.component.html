@@ -1,0 +1,82 @@
+<ba-card title="Price" baCardClass="medium-card with-scroll no-body-padding"
+         (onAction)="new()"
+         cardType="card-action" baCardActionClass="fa fa-plus-circle">
+    <ul class="list-group">
+        <li *ngFor="let item of list" class="list-group-item">
+            <div (click)="edit(item)" class="row">
+                Fee: {{item.membership_fee}} Type: {{item.price_type|baPriceType}}
+            </div>
+        </li>
+    </ul>
+
+</ba-card>
+
+
+<div bsModal #create="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+     aria-labelledby="myLargeModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form #f="ngForm" (ngSubmit)="submit(f.value)" autocomplete="off">
+                <input type="hidden" name="id" ngModel #id="ngModel">
+
+                <div class="modal-header">
+                    <h4 class="modal-title" *ngIf="id.value">Edit</h4>
+                    <h4 class="modal-title" *ngIf="!id.value">Add</h4>
+
+
+                    <button class="close" type="button" (click)="create.hide()" aria-label="Close">
+                      <i class="ion-close" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="form-group row">
+                            <div class="col-4">
+                                <label>
+                                    Membership fee
+                                </label>
+                            </div>
+                            <div class="col-8">
+                                <input type="text" class="form-control" name="membership_fee" ngModel>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-4">
+                                <label>
+                                    Price type
+                                </label>
+                            </div>
+                            <div class="col-8">
+                                <select class="form-control" name="price_type" ngModel>
+                                    <option>Select</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-4">
+                                <label>
+                                    Is Active
+                                </label>
+                            </div>
+                            <div class="col-8">
+                                <ui-switch name="is_active" ngModel></ui-switch>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-danger" *ngIf="id.value" type="button" (click)="delet(id.value)">Delete
+                    </button>
+
+                    <button class="btn btn-primary auth-input">Save</button>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

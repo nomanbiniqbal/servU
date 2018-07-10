@@ -1,0 +1,70 @@
+<div bsModal #cashPopup="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="cashPopup"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">PaymentProcess</h4>
+                <button class="close" type="button" (click)="cashPopup.hide()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form #f="ngForm" (ngSubmit)="submit(f.value)" autocomplete="off">
+                <div class="modal-body payment-area">
+                    <tabset type="pills" [vertical]="true" [justified]="true">
+                        <tab *ngFor="let m of methods" [heading]="m.payment_method.name">
+                            <div [ngSwitch]="m.payment_method.id" class="form-horizontal">
+                                <div *ngSwitchCase="1">
+                                    <div class="form-group row">
+                                        <div class="col-3">
+                                            <label>Cash</label>
+                                        </div>
+                                        <div class="col-9">
+                                            <input type="text" class="form-control">
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div *ngSwitchCase="2">
+
+                                    <div class="form-group row">
+                                        <label class="col-3">Number</label>
+
+                                        <div class="col-9">
+                                            <input type="number" name="number" class="form-control"
+                                                   placeholder="xxxx-xxxx-xxxx-xxxx">
+                                        </div>
+
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-3">CVC</label>
+                                        <div class="col-9">
+                                            <input type="number" name="cvc" class="form-control" placeholder="xxx">
+                                        </div>
+
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-3">Exp</label>
+                                        <div class="col-4">
+                                            <input type="number" name="exp_month" class="form-control" placeholder="MM">
+                                        </div>
+                                        <label class="col-1">-</label>
+                                        <div class="col-4">
+                                            <input type="number" name="exp_year" class="form-control"
+                                                   placeholder="YYYY">
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </tab>
+                    </tabset>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary">Process</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

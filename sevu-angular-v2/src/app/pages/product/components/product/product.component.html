@@ -1,0 +1,127 @@
+<div class="row">
+    <ba-card class="col-sm-3" title="Products" baCardClass="viewport100 with-scroll" (onAction)="productCreate()"
+             cardType="card-action"
+
+             baCardActionClass="fa fa-plus-circle">
+        <app-product-list type="Product" (select)="productSelect($event)"></app-product-list>
+    </ba-card>
+    <ba-card class="col-sm-9" cardType="card-action"
+             [title]="product.name" baCardClass="viewport100 with-scroll"
+             [baCardActionClass]="product.id?'fa fa-edit':''"
+             (onAction)="editProduct(product)">
+        <app-product-detail [product]="product"></app-product-detail>
+    </ba-card>
+
+</div>
+<div class="row">
+    <app-notification class="col-12" [product]="product"></app-notification>
+</div>
+
+
+<div bsModal #productEdit="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+     aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form #sf="ngForm" (ngSubmit)="createProduct(sf.value)" autocomplete="off">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" *ngIf="!pId.value">Add Product</h4>
+                    <h4 class="modal-title" *ngIf="pId.value">Edit Product</h4>
+                    <button class="close pull-right" aria-label="Close" type="button" (click)="productEdit.hide()">
+                      <i class="ion-close" aria-hidden="true"></i>
+                    </button>
+
+                </div>
+
+                <div class="modal-body">
+                    <tabset type="pills" [justified]="true">
+                        <tab heading='Product'>
+                            <div>
+                                <input type="hidden" name="product_type" ngModel="Product">
+                                <input type="hidden" name="product_id" [ngModel]="editP.id" #pId="ngModel">
+
+                                <div class="form-group row" baFieldFocusValidation [input]="product_name">
+                                    <label class="col-sm-2 control-label">Name</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control " name="name" #product_name="ngModel"
+                                               required
+                                               [ngModel]="editP.name">
+                                        <ba-validation-message [input]="product_name"></ba-validation-message>
+                                    </div>
+                                </div>
+
+                                <!--<div class="form-group row">-->
+                                    <!--<label class="col-sm-2 control-label">Duration</label>-->
+                                    <!--<div class="col-sm-10">-->
+                                        <!--<input type="text" name="duration" class="form-control"-->
+                                               <!--[ngModel]="editP.duration">-->
+                                    <!--</div>-->
+                                <!--</div>-->
+
+                                <div class="form-group row" baFieldFocusValidation [input]="product_cost">
+                                    <label class="col-sm-2 control-label">Cost</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="cost" class="form-control" #product_cost="ngModel"
+                                               required
+                                               [ngModel]="editP.cost">
+                                        <ba-validation-message [input]="product_cost"></ba-validation-message>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-2 control-label">Tax</label>
+                                    <div class="col-sm-10">
+
+                                        <input type="text" name="tax" class="form-control"
+                                               [ngModel]="editP.tax">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-2 control-label">Commission</label>
+                                    <div class="col-sm-10">
+
+                                        <input type="text" name="commission" class="form-control"
+                                               [ngModel]="editP.commission">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-sm-2 control-label">Category</label>
+                                    <div class="col-sm-10">
+                                        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                                            <input [(ngModel)]="editP.category"
+                                                   name="category"
+                                                   [typeahead]="categories"
+                                                   typeaheadOptionField="name"
+                                                   class="form-control">
+                                            <div class="input-group-addon" (click)="addNewCat(editP.category)"
+                                                 *ngIf="!loadingCat&& isAddAble(editP.category)">+
+                                            </div>
+                                            <div class="input-group-addon" *ngIf="loadingCat"><i
+                                                    class="fa fa-spinner fa-spin"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </tab>
+                        <tab heading='Categories'>
+
+                            <app-categories></app-categories>
+
+                        </tab>
+                    </tabset>
+
+                </div>
+                <div class="modal-footer">
+
+                    <button class="btn btn-danger pull-left" type="button" *ngIf="pId.value"
+                            (click)="removeProduct(editP)">Delete
+                    </button>
+                    <button class="btn btn-secondary confirm-btn" type="button" (click)="productEdit.hide()">Close
+                    </button>
+                    <button class="btn btn-primary confirm-btn" [disabled]="sf.invalid" type="submit">Save
+                        changes
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

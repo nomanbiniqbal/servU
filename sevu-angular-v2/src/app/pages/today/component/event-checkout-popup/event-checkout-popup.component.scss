@@ -1,0 +1,20 @@
+@import "../../../../theme/sass/conf/mixins";
+
+@include scrollbars(.4em, rgba(0, 0, 0, 0.6), rgba(255, 255, 255, 0.7));
+.product-scroll {
+  height: 100px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  .product-item {
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #ececec;
+  }
+}
+
+.membership-list-item {
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ececec;
+
+}

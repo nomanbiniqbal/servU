@@ -1,0 +1,24 @@
+<div class="container" *ngIf="!membership.id">
+    <br>
+    <br>
+    <h3 class="text-center">Please Select Any Member</h3>
+</div>
+
+<div class="container form-horizontal" *ngIf="membership.id">
+    <div class="row">
+        <div class="col-6">
+            <div class="form-group row">
+                <label class="col-4">Available from </label>
+                <label class="col-6">{{membership.affected_from|baDate:'YYYY-MM-DD HH:mm:ss':'MMMM DD, YYYY LT'}}</label>
+            </div>
+        </div>
+
+        <div class="col-6">
+            <div class="form-group row">
+                <label class="col-4">Available to </label>
+                <label class="col-6">{{membership.affected_to|baDate:'YYYY-MM-DD HH:mm:ss':'MMMM DD, YYYY LT'}}</label>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,20 @@
+<div class="branchList">
+    <ba-card title="Branch List"
+             cardType="card-action"
+             (onAction)="_create()"
+             baCardActionClass="fa fa-plus-circle"
+             baCardClass="viewport100 with-scroll">
+        <div *ngIf="list">
+            <ul class="list-group">
+                <div *ngFor="let c of list" class="my-list-item"
+                    (click)="_onSelect(c)"
+                    [ngClass]="{OnSelected:c.id==selected}">
+                    <i class="fa fa-angle-right fa-fw" aria-hidden="true"></i>{{c.branch_name}}
+                </div>
+            </ul>
+        </div>
+        <div *ngIf="!list" class="text-center col-sm-12 margin-15">
+            <span *ngIf="loading"><i class="fa fa-spin fa-spinner"></i></span>
+        </div>
+    </ba-card>
+</div>

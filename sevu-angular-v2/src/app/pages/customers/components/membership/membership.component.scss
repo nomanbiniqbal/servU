@@ -1,0 +1,30 @@
+@import '../../../../theme/sass/conf/mixins';
+
+.membership-modal {
+  @include scrollbars(.4em, rgba(0, 0, 0, 0.6), rgba(255, 255, 255, 0.7));
+  .with-scroll {
+    max-height: 240px;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+  .items-title{
+    padding-left:15px;
+    border-bottom: 1px solid #ececec;
+    margin-bottom: 5px;
+  }
+  .product-item{
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+    border-bottom: 1px solid #ececec;
+  }
+
+  .membership-item {
+    padding: 10px;
+    margin-bottom: 5px;
+    border-bottom: 1px solid #ececec;
+    &.active {
+      color: white;
+      background: #55acee;
+    }
+  }
+}

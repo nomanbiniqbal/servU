@@ -1,0 +1,315 @@
+<div class="row">
+  <ba-card class="col-sm-4"
+           title="Branch List" baCardClass="viewport100 with-scroll">
+    <branch-list></branch-list>
+  </ba-card>
+
+  <ba-card class="col-sm-8"
+           title="Name of Branch" cardType="card-action" baCardActionClass="fa fa-pencil-square-o" (onAction)="onEdit()"
+           baCardClass="viewport100">
+    <branch-detail></branch-detail>
+  </ba-card>
+</div>
+
+
+<div bsModal #branchEditModel="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+     aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+
+
+    <form #form="ngForm" (ngSubmit)="submitForm(form.value)" class="form-horizontal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button class="close" aria-label="Close" (click)="branchEditModel.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title">Edit Branch</h4>
+        </div>
+
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-sm-6">
+
+              <div class="form-group row">
+                <label class="col-sm-4 control-label">Name</label>
+
+                <div class="col-sm-8">
+                  <input type="text" class="form-control" placeholder="Name"  [(ngModel)]="branch.name" #name="ngModel" [ngModelOptions]="{standalone: true}" required >
+                </div>
+                <div [hidden]="name.valid || name.pristine">
+                  <i class="ion-alert-circled form-control-feedback" style="right: 2%" aria-hidden="true"></i>
+                  <span  class="sr-only">(error)</span>
+                  <span style="margin-left: 4%;right: 50%;top:7%" class="help-block sub-little-text">Required</span>
+
+                </div>
+
+              </div>
+
+
+
+
+
+
+
+
+              <div class="form-group row">
+                <label class="col-sm-4 control-label">Street Number</label>
+                <div class="col-sm-8">
+                  <input type="text" class="form-control" placeholder="Address" name="address" [(ngModel)]="branch.address" #address="ngModel" [ngModelOptions]="{standalone: true}" required>
+                </div>
+                <div [hidden]="address.valid || address.pristine">
+                  <i class="ion-alert-circled form-control-feedback" style="top:10%;right: 2%" aria-hidden="true"></i>
+                  <span  class="sr-only">(error)</span>
+                  <span style="margin-left:4%;right: 50%;top:17%" class="sub-little-text">Required</span>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-sm-4 control-label">Street Name</label>
+                <div class="col-sm-8">
+                  <input type="text" class="form-control" placeholder="Street Name"  [(ngModel)]="branch.street" #street="ngModel" [ngModelOptions]="{standalone: true}" required>
+                </div>
+                <div [hidden]="street.valid || street.pristine">
+                  <i class="ion-alert-circled form-control-feedback" style="top:19%;right: 2%" aria-hidden="true"></i>
+                  <span  class="sr-only">(error)</span>
+                  <span style="margin-left:4%;right: 50%;top:21%" class="sub-little-text">Required</span>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-sm-4 control-label">Address Line 1</label>
+                <div class="col-sm-8">
+                  <input type="text" class="form-control" placeholder="Address Line 1" [(ngModel)]="branch.addressLine1" #addressLine1="ngModel" [ngModelOptions]="{standalone: true}" required>
+                </div>
+                <div [hidden]="addressLine1.valid || addressLine1.pristine">
+                <i class="ion-alert-circled form-control-feedback" style="top:30%;right: 2%" aria-hidden="true"></i>
+                <span  class="sr-only">(error)</span>
+                <span style="margin-left:4%;right: 50%;top:21%" class="sub-little-text">Required</span>
+              </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-sm-4 control-label">Address Line 2</label>
+                <div class="col-sm-8">
+                  <input type="text" class="form-control" placeholder="Business Name" [(ngModel)]="branch.addressLine2" #addressLine2="ngModel" [ngModelOptions]="{standalone: true}" required>
+                </div>
+                <div [hidden]="addressLine2.valid || addressLine2.pristine">
+                  <i class="ion-alert-circled form-control-feedback" style="top:39%;right: 2%" aria-hidden="true"></i>
+                  <span  class="sr-only">(error)</span>
+                  <span style="margin-left:4%;right: 50%;top:21%" class="sub-little-text">Required</span>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-sm-4 control-label">City</label>
+                <div class="col-sm-8">
+                  <input type="text" class="form-control" placeholder="City " [(ngModel)]="branch.city" #city="ngModel" [ngModelOptions]="{standalone: true}" required>
+                </div>
+                <div [hidden]="city.valid || city.pristine">
+                  <i class="ion-alert-circled form-control-feedback" style="top:48%;right: 2%" aria-hidden="true"></i>
+                  <span  class="sr-only">(error)</span>
+                  <span style="margin-left:4%;right: 50%;top:21%" class="sub-little-text">Required</span>
+                </div>
+              </div>
+
+
+              <div class="form-group row">
+                <label class="col-sm-4 control-label">Post Code</label>
+                <div class="col-sm-8">
+
+                  <input type="text" class="form-control" placeholder="Postal Code" [(ngModel)]="branch.PostCode" #PostCode="ngModel" [ngModelOptions]="{standalone: true}" required>
+                </div>
+                <div [hidden]="PostCode.valid || PostCode.pristine">
+                  <i class="ion-alert-circled form-control-feedback" style="top:56%;right: 2%" aria-hidden="true"></i>
+                  <span  class="sr-only">(error)</span>
+                  <span style="margin-left:4%;right: 50%;top:21%" class="sub-little-text">Required</span>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-sm-4 control-label">Contry</label>
+                <div class="col-sm-8">
+                  <input type="text" class="form-control" placeholder="Contry" [(ngModel)]="branch.Contry" #Contry="ngModel" [ngModelOptions]="{standalone: true}" required>
+                </div>
+                <div [hidden]="Contry.valid || Contry.pristine">
+                  <i class="ion-alert-circled form-control-feedback" style="top:65%;right: 2%" aria-hidden="true"></i>
+                  <span  class="sr-only">(error)</span>
+                  <span style="margin-left:4%;right: 50%;top:21%" class="sub-little-text">Required</span>
+                </div>
+              </div>
+
+
+              <div class="form-group row">
+                <label class="col-sm-4 control-label">TimeZone</label>
+                <div class="col-sm-8">
+                  <input type="text" class="form-control" placeholder="TimeZone " [(ngModel)]="branch.TimeZone" #TimeZone="ngModel" [ngModelOptions]="{standalone: true}" required>
+                </div>
+                <div [hidden]="TimeZone.valid || TimeZone.pristine">
+                  <i class="ion-alert-circled form-control-feedback" style="top:77%;right: 2%" aria-hidden="true"></i>
+                  <span  class="sr-only">(error)</span>
+                  <span style="margin-left:4%;right: 50%;top:21%" class="sub-little-text">Required</span>
+                </div>
+              </div>
+
+
+              <div class="form-group row">
+                <label class="col-sm-4 control-label">Contact</label>
+                <div class="col-sm-8">
+                  <input type="text" class="form-control" placeholder="Contact" [(ngModel)]="branch.Contact" #Contact="ngModel" [ngModelOptions]="{standalone: true}" required>
+                </div>
+                <div [hidden]="Contact.valid || Contact.pristine">
+                  <i class="ion-alert-circled form-control-feedback" style="top:88%;right: 2%" aria-hidden="true"></i>
+                  <span  class="sr-only">(error)</span>
+                  <span style="margin-left:4%;right: 50%;top:21%" class="sub-little-text">Required</span>
+                </div>
+              </div>
+
+
+            </div>
+            <div class="col-sm-6">
+              <tabset>
+                <tab heading='Timing'>
+
+                  <div class="row form-group ">
+                    <div class="col-sm-4 offset-sm-2 text-center">
+                      <h4>Start</h4>
+                    </div>
+                    <div class="col-sm-4 text-center">
+                      <h4>End</h4>
+                    </div>
+
+                  </div>
+
+                  <div class="row form-group">
+                    <div class="col-sm-2">
+                      Mon
+                    </div>
+                    <div class="col-sm-4">
+                      <input class="form-control" type="time">
+                    </div>
+                    <div class="col-sm-4">
+                      <input type="time" class="form-control">
+                    </div>
+
+                    <div class="col-sm-2">
+                      <ui-switch ></ui-switch>
+                    </div>
+                  </div>
+
+                  <div class="row form-group">
+                    <div class="col-sm-2">
+                      Tue
+                    </div>
+                    <div class="col-sm-4">
+                      <input class="form-control" type="time">
+                    </div>
+                    <div class="col-sm-4">
+                      <input type="time" class="form-control">
+                    </div>
+
+                    <div class="col-sm-2">
+                      <ui-switch ></ui-switch>
+                    </div>
+                  </div>
+
+                  <div class="row form-group">
+                    <div class="col-sm-2">
+                      Wed
+                    </div>
+                    <div class="col-sm-4">
+                      <input class="form-control" type="time">
+                    </div>
+                    <div class="col-sm-4">
+                      <input type="time" class="form-control">
+                    </div>
+
+                    <div class="col-sm-2">
+                      <ui-switch ></ui-switch>
+                    </div>
+                  </div>
+
+                  <div class="row form-group">
+                    <div class="col-sm-2">
+                      Thus
+                    </div>
+                    <div class="col-sm-4">
+                      <input class="form-control" type="time">
+                    </div>
+                    <div class="col-sm-4">
+                      <input type="time" class="form-control">
+                    </div>
+
+                    <div class="col-sm-2">
+                      <ui-switch ></ui-switch>
+                    </div>
+                  </div>
+
+                  <div class="row form-group">
+                    <div class="col-sm-2">
+                      Fri
+                    </div>
+                    <div class="col-sm-4">
+                      <input class="form-control" type="time">
+                    </div>
+                    <div class="col-sm-4">
+                      <input type="time" class="form-control">
+                    </div>
+
+                    <div class="col-sm-2">
+                      <ui-switch ></ui-switch>
+                    </div>
+                  </div>
+                </tab>
+                <tab>
+                  <template tabHeading>Provider</template>
+                  <form class="row form-inline">
+                    <div class="form-group col-sm-10">
+                      <input type="text" class="form-control" id="exampleInputName2" placeholder="Search">
+                    </div>
+                  </form>
+                  <div class="feed-messages-container with-scroll">
+                    <div class="feed-message" *ngFor="let message of list" (click)="expandMessage(message)">
+                      <div class="text-block text-message">
+                        <div class="message-header">
+                          <span class="author"> {{ message.hour}} {{ 'Hours' }} {{','}} {{message.day}} {{'days'}} {{','}} {{'are left'}} </span>
+                        </div>
+                        <div class="message-content line-clamp" [ngClass]="{'line-clamp-2' : !message.expanded}">
+                          <span *ngIf="message.preview">{{ message.header }} </span>{{ message.text }}
+                        </div>
+
+
+
+
+                        <div [ngClass]="{'hidden': !message.expanded}" class="message-time">
+                          <div class="post-time">
+                            {{ message.time }}
+                          </div>
+                          <div class="ago-time">
+                            {{ message.ago }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </tab>
+              </tabset>
+
+            </div>
+          </div>
+
+        </div>
+
+
+        <div class="modal-footer">
+          <button class="btn btn-secondary confirm-btn" type="button" (click)="branchEditModel.hide()">Close</button>
+          <button class="btn btn-primary confirm-btn" type="submit" (click)="save()">Save changes</button>
+          <button class="btn btn-danger confirm-btn pull-left" type="button" (click)="delete()">Delete</button>
+        </div>
+      </div>
+    </form>
+
+
+  </div>
+</div>
+

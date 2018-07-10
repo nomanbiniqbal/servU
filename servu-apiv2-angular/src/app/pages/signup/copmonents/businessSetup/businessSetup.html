@@ -1,0 +1,174 @@
+<h1>Bussiness detials</h1>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit(form.value)" class="form-horizontal col-sm-9 offset-sm-1">
+
+
+  <div class="form-group row"
+       [ngClass]="{
+       'has-error': (!form.controls.personal_name.valid && form.controls.personal_name.touched),
+       'has-success': (form.controls.personal_name.valid && form.controls.personal_name.touched)
+        }">
+    <label class="col-sm-3 control-label">Personal Name</label>
+    <div class="col-sm-9">
+      <input type="text" formControlName="personal_name" class="form-control" placeholder="Name">
+
+      <span class="help-block sub-little-text"
+            *ngIf="form.controls.personal_name.touched && form.controls.personal_name.hasError('required')">This field is required</span>
+      <span class="help-block sub-little-text"
+            *ngIf="form.controls.personal_name.touched && form.controls.personal_name.hasError('minlength')">min lencht is 4</span>
+    </div>
+  </div>
+
+
+  <div class="form-group row"
+       [ngClass]="{
+       'has-error': (!form.controls.email.valid && form.controls.email.touched),
+       'has-success': (form.controls.email.valid && form.controls.email.touched)
+        }">
+    <label class="col-sm-3 control-label">Personal Email</label>
+    <div class="col-sm-9">
+      <input type="email" formControlName="email" class="form-control" placeholder="Email">
+
+      <span class="help-block sub-little-text"
+            *ngIf="form.controls.email.touched && form.controls.email.hasError('required')">This field is required</span>
+      <span class="help-block sub-little-text"
+            *ngIf="form.controls.email.touched && form.controls.email.hasError('validateEmail')">Email is invalid</span>
+
+    </div>
+  </div>
+
+  <div formGroupName="passwords"
+
+       [ngClass]="{
+                  'has-error': (!form.controls.passwords.controls.password.valid &&
+                  form.controls.passwords.controls.password.touched &&
+                  form.controls.passwords.controls.repeatPassword.touched),
+                  'has-success': (form.controls.passwords.controls.password.valid &&
+                  form.controls.passwords.controls.password.touched &&
+                  form.controls.passwords.controls.repeatPassword.touched)
+                        }">
+    <div class="form-group row"
+         [ngClass]="{
+       'has-error': (!form.controls.passwords.controls.password.valid && form.controls.passwords.controls.password.touched),
+       'has-success': (form.controls.passwords.controls.password.valid && form.controls.passwords.controls.password.touched)
+        }">
+      <label class="col-sm-3 control-label">Password</label>
+      <div class="col-sm-9">
+        <input type="password" formControlName="password" class="form-control" placeholder="password">
+      </div>
+      <div *ngIf="form.controls.passwords.controls.password.touched">
+          <span class="help-block sub-little-text"
+                *ngIf="form.controls.passwords.controls.password.hasError('minlength')">min lencht is 4</span>
+
+        <span class="help-block sub-little-text"
+              *ngIf="form.controls.passwords.controls.password.hasError('required')">This field is required</span>
+      </div>
+
+    </div>
+
+    <div class="form-group row"
+         [ngClass]="{
+       'has-error': (!form.controls.passwords.controls.repeatPassword.valid && form.controls.passwords.controls.repeatPassword.touched),
+       'has-success': (form.controls.passwords.controls.repeatPassword.valid && form.controls.passwords.controls.repeatPassword.touched)
+        }">
+      <label class="col-sm-3 control-label">Confirm Password</label>
+      <div class="col-sm-9">
+        <input type="password" formControlName="repeatPassword" class="form-control" placeholder="password">
+      </div>
+
+      <div *ngIf="form.controls.passwords.controls.repeatPassword.touched">
+          <span class="help-block sub-little-text"
+                *ngIf="form.controls.passwords.controls.repeatPassword.hasError('minlength')">min lencht is 4</span>
+
+          <span class="help-block sub-little-text"
+                *ngIf="form.controls.passwords.controls.repeatPassword.hasError('required')">This field is required</span>
+      </div>
+
+      <span class="help-block sub-little-text"
+            *ngIf="form.controls.passwords.controls.password.touched
+            &&
+            form.controls.passwords.controls.repeatPassword.touched && form.controls.passwords.hasError('passwordsEqual')">Password not matched</span>
+    </div>
+
+  </div>
+
+  <div class="form-group row"
+       [ngClass]="{
+       'has-error': (!form.controls.telephone.valid && form.controls.telephone.touched),
+       'has-success': (form.controls.telephone.valid && form.controls.telephone.touched)
+        }"
+  >
+    <label class="col-sm-3 control-label">Telephone</label>
+    <div class="col-sm-9">
+      <input type="text" class="form-control" formControlName="telephone" placeholder="Mobile Number">
+    </div>
+
+    <span class="help-block sub-little-text"
+          *ngIf="form.controls.telephone.touched && form.controls.telephone.hasError('required')">This field is required</span>
+  </div>
+
+  <div class="form-group row"
+       [ngClass]="{
+       'has-error': (!form.controls.address.valid && form.controls.address.touched),
+       'has-success': (form.controls.address.valid && form.controls.address.touched)
+        }"
+  >
+    <label class="col-sm-3 control-label">Address</label>
+    <div class="col-sm-9">
+      <input type="text" class="form-control" formControlName="address" placeholder="Your Location">
+    </div>
+    <span class="help-block sub-little-text"
+          *ngIf="form.controls.address.touched && form.controls.address.hasError('required')">This field is required</span>
+
+  </div>
+
+  <div class="form-group row"  [ngClass]="{
+       'has-error': (!country_id && form.controls.country_id.touched),
+       'has-success': (country_id && form.controls.country_id.touched)
+        }">
+    <label class="col-sm-3 control-label">Country</label>
+    <div class="col-sm-9">
+      <input formControlName="country_id" class="form-control" [typeahead]="countries" typeaheadOptionField="nicename"
+             (typeaheadOnSelect)="onCountrySelect($event)" placeholder="Controy">
+    </div>
+    <span class="help-block sub-little-text"
+          *ngIf="form.controls.country_id.touched && !country_id">Please pick any contry</span>
+
+
+  </div>
+  <div class="form-group row has-feedback"
+       [ngClass]="{
+       'has-error': (!form.controls.zone_id.valid && form.controls.zone_id.touched),
+       'has-success': (form.controls.zone_id.valid && form.controls.zone_id.touched)
+        }"
+  >
+    <label class="col-sm-3 control-label">Zone</label>
+    <div class="col-sm-9">
+      <select class="form-control" formControlName="zone_id">
+        <option value="">Select</option>
+        <option *ngFor="let zone of zones" value="{{zone.id}}">{{zone.zone_name}}</option>
+      </select>
+      <div *ngIf="searchingZones">
+        <i class=" fa fa-spin fa-spinner form-control-feedback" aria-hidden="true"></i>
+        <span class="sr-only">(loading)</span>
+      </div>
+
+      <span class="help-block sub-little-text"
+            *ngIf="form.controls.zone_id.touched && form.controls.zone_id.hasError('required')">This field is required please choose Contry </span>
+    </div>
+  </div>
+
+  <div class="form-group row" *ngFor="let error of errors">
+    <div class="col-sm-12 text-center">
+      {{error}}
+    </div>
+  </div>
+
+
+  <div class="form-group row">
+    <div class="col-sm-12 text-center">
+      <button [disabled]="!form.valid" type="submit" class="btn btn-default btn-auth">Get Started</button>
+    </div>
+  </div>
+
+</form>

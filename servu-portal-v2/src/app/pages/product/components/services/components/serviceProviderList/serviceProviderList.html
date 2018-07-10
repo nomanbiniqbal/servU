@@ -1,0 +1,71 @@
+<ba-card [title]="_id?'Providers':''" cardType="card-action" (onAction)="providerModal.show()"
+         [baCardActionClass]="_id?'fa fa-plus-circle':''"
+         baCardClass="service-list-card-height with-scroll">
+
+    <!--<div *ngIf="!staffList.length">
+        <div class="col-sm-12 text-center">
+          <h5 *ngIf="!loading">Please select any Product</h5>
+
+        </div>
+    </div>-->
+
+    <div *ngIf="_id">
+        <div class="text-center" *ngIf="!staffList.length">
+            <div *ngIf="loading">
+                <i class="fa fa-spin fa-spinner"></i>
+            </div>
+            <div *ngIf="!loading">
+                Please click add button to add providers in this list.
+            </div>
+
+        </div>
+        <ul class="list-group" *ngIf="staffList.length">
+            <div class="list-item" *ngFor="let item of staffList">
+                {{item.user.name}}
+            </div>
+        </ul>
+    </div>
+
+
+</ba-card>
+
+<div bsModal #providerModal="bs-modal" class="modal fade with-scroll" tabindex="-1" role="dialog"
+     aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+
+        <form class="form-horizontal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Staff</h4>
+                    <button class="close pull-right" aria-label="Close" (click)="providerModal.hide()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search" name="search" #search="ngModel"
+                                   ngModel (keyup)="searchList(search.value)">
+                        </div>
+
+                        <ul class="list-group">
+                            <div class="listitem" *ngFor="let item of filterList">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="checkbox" class="form-check-input" name="st"
+                                               [checked]="isStaff(item)?'checked':''"
+                                               (click)="isStaff(item)?remove(item):added(item)">
+                                        {{item.name}}
+                                    </label>
+                                </div>
+                            </div>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+        </form>
+
+
+    </div>
+</div>

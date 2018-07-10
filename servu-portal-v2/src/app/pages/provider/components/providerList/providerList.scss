@@ -1,0 +1,51 @@
+provider-list {
+  .margin-15 {
+    margin-top: 20%;
+  }
+
+  height: 100%;
+  ul {
+    background-color: #ffffff;
+  }
+  li:hover {
+    background-color: #4db8f8;
+    cursor: pointer;
+  }
+  .list-item {
+    background-color: #ffffff;
+    line-height: 35px;
+    padding-left: 10px;
+    border-radius: 5px;
+  }
+  .list-item:hover {
+    background-color: #4db8f8;
+    cursor: pointer;
+    color: #ffffff;
+  }
+
+  .OnSelected {
+
+    background-color: #4db8f8;
+    cursor: pointer;
+    color: #ffffff;
+
+  }
+  .search-field {
+    padding: 10px;
+    border-bottom: 1px gainsboro solid;
+  }
+  .with-scroll {
+    height: calc(100% - 105px);
+    overflow-y: auto;
+  }
+  .list-group-item {
+    border-right: 0;
+    border-left: 0;
+    &:last-child {
+      border-bottom: 0;
+    }
+    &:first-child {
+      border-top: 0;
+    }
+  }
+}
